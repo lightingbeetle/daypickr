@@ -1,6 +1,6 @@
 export default ({
   classes,
-  strings,
+  l10n,
   months,
   years,
   id,
@@ -9,21 +9,21 @@ export default ({
     <div class="${classes.header}">
 
       <label>
-        ${strings.month}
+        ${l10n.month}
         <select data-daypicker-month-select class="${classes.select} ${classes.monthSelect}">
           ${months.map(month => `<option>${month}</option>`)}
         </select>
       </label>
 
       <label>
-        ${strings.year}
+        ${l10n.year}
         <select data-daypicker-year-select class="${classes.select} ${classes.yearSelect}">
           ${years.map(year => `<option>${year}</option>`)}
         </select>
       </label>
 
-      <button type="button" data-daypicker-prev-month>${strings.prevMonth}</button>
-      <button type="button" data-daypicker-prev-month>${strings.nextMonth}</button>  
+      <button type="button" data-daypicker-prev-month>${l10n.prevMonth}</button>
+      <button type="button" data-daypicker-prev-month>${l10n.nextMonth}</button>  
     </div>
   </div>
 `;

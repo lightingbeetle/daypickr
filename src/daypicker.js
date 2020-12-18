@@ -1,14 +1,10 @@
 import { dialog, calendar } from './templates';
+import l10n from './utils/l10n';
 
 const defaultConfig = {
   attachTo: '#daypicker',
   appendTo: 'body',
-  strings: {
-    prevMonth: 'previous month',
-    nextMonth: 'next month',
-    month: 'Month',
-    year: 'Year',
-  },
+  l10n,
   classes: {
     wrapper: 'daypicker',
     header: 'daypicker__header',
