@@ -86,14 +86,14 @@ class Daypicker {
     const lastDay = new Date(year, month + 1, 0).getDay();
     const days = [];
 
-    for (let i = 0; i < firstDay; i++) {
-      const day = new Date( new Date(currentMonth).setDate(i * -1) );
-      days.push(day);
-    }
-
     for (let i = 1; i <= new Date(year, month + 1, 0).getDate(); i++) {
       const day = new Date(year, month, i);
       days.push(day);
+    }
+
+    for (let i = 0; i < firstDay; i++) {
+      const day = new Date( new Date(currentMonth).setDate(i * -1) );
+      days.unshift(day);
     }
 
     for (let i = lastDay, l = 1; i < 6; i++, l++) {
