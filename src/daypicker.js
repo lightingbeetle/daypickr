@@ -1,9 +1,11 @@
 import { dialog, calendar } from './templates';
 import l10n from './utils/l10n';
+import { getMonthView } from './utils/date';
 
 const defaultConfig = {
   attachTo: '#daypicker',
   appendTo: 'body',
+  firstDayOfWeek: 1,
   l10n,
   classes: {
     wrapper: 'daypicker',
@@ -22,7 +24,6 @@ const defaultConfig = {
   },
   months: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ],
   years: [ '1990', '1991', '1992', '1993', '1994', '1995', '1996', '1997', '1998', '1999' ],
-  weekdays: [ { name: 'Sunday', shortname: 'Sun', }, { name: 'Monday', shortname: 'Mon', }, { name: 'Tuesday', shortname: 'Tue', }, { name: 'Wednesday', shortname: 'Wed', }, { name: 'Thursday', shortname: 'Thu', }, { name: 'Friday', shortname: 'Fri', }, { name: 'Saturday', shortname: 'Sat', }, ]
 };
 
 class Daypicker {
@@ -66,7 +67,6 @@ class Daypicker {
     );
 
     this.dialog = document.getElementById(dialogId);
-    console.log(this.dialog);
   }
 
   renderCalendar() {
@@ -78,6 +78,7 @@ class Daypicker {
         ...this.config,
         id: calendarId,
         days: this.currentViewDates,
+        weekdays: this.config.l10n.weekdays,
       })
     );
 
@@ -85,29 +86,11 @@ class Daypicker {
   }
 
   populateCalendar(year, month) {
-    const currentMonth = new Date(year, month);
-    const firstDay = currentMonth.getDay();
-    const lastDay = new Date(year, month + 1, 0).getDay();
-    const days = [];
-
-    for (let i = 1; i <= new Date(year, month + 1, 0).getDate(); i++) {
-      const day = new Date(year, month, i);
-      days.push(day);
-    }
-
-    for (let i = 0; i < firstDay; i++) {
-      const day = new Date( new Date(currentMonth).setDate(i * -1) );
-      days.unshift(day);
-    }
-
-    for (let i = lastDay, l = 1; i < 6; i++, l++) {
-      const day = new Date(year, month + 1, l);
-      days.push(day);
-    }
+    const days = getMonthView(year, month, this.config.firstDayOfWeek);
 
     this.currentViewDates = days.map(day => ({
       date: day,
-      number: day.getDay(),
+      number: day.getDate(),
     }));
   }
 }
