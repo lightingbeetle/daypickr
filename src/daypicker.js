@@ -50,6 +50,7 @@ class Daypicker {
 
     this.identifier = this.boundElement.getAttribute('id');
 
+    this.arrangeWeekdays();
     this.populateCalendar(2020, 11);
     this.renderDialog();
     this.renderCalendar();
@@ -92,6 +93,16 @@ class Daypicker {
       date: day,
       number: day.getDate(),
     }));
+  }
+
+  /** reorder week days to match firstDayOfWeek settings */
+  arrangeWeekdays() {
+    const moveToEnd = this.config.l10n.weekdays.splice(
+      0,
+      this.config.firstDayOfWeek
+    );
+    console.log(moveToEnd);
+    this.config.l10n.weekdays = [...this.config.l10n.weekdays, ...moveToEnd];
   }
 }
 
