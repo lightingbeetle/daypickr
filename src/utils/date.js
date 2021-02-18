@@ -4,7 +4,7 @@ function getRange(startDate, endDate) {
 
   while (currentDay.getTime() !== endDate.getTime()) {
     days.push(new Date(currentDay));
-    currentDay = new Date( currentDay.setDate(currentDay.getDate() + 1) );
+    currentDay = new Date(currentDay.setDate(currentDay.getDate() + 1));
   }
 
   days.push(new Date(currentDay));
@@ -36,6 +36,6 @@ export function getMonthView(year, month, firstDayOfWeek) {
 
   const firstDay = getFirstDayOfWeek(monthStart, firstDayOfWeek);
   const lastDay = getLastDayOfWeek(monthEnd, firstDayOfWeek);
-  
+
   return getRange(firstDay, lastDay);
 }
