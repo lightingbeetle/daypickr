@@ -29,9 +29,9 @@ const Daypicker = ({
         min,
         max,
         selected,
-        selectDay: (date) => {
-          setCurrentDay(date);
-        },
+        setYear,
+        setMonth,
+        setCurrentDay,
       }}
     >
       <div class=${classes.wrapper} role="dialog" aria-modal="true">

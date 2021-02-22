@@ -11,7 +11,7 @@ import {
 import Context from "./Context";
 
 const Calendar = ({ year, month }) => {
-  const { firstDayOfWeek, classes, l10n, selected, selectDay } = useContext(
+  const { firstDayOfWeek, classes, l10n, selected, setCurrentDay } = useContext(
     Context
   );
 
@@ -51,12 +51,9 @@ const Calendar = ({ year, month }) => {
                     <button
                       class="${buttonClasses.join(" ")}"
                       type="button"
-                      onClick=${() => selectDay(day)}
+                      onClick=${() => setCurrentDay(day)}
                     >
-                      <span class="${classes.srOnly}"
-                        >${day.toLocaleDateString()}</span
-                      >
-                      <span aria-hidden="true">${day.getDate()}</span>
+                      ${day.toLocaleDateString()}
                     </button>
                   </td>
                 `;

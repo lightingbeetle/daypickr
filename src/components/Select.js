@@ -1,14 +1,14 @@
 import { html } from "htm/preact";
 
-const Select = ({ label, value, options }) => {
+const Select = ({ label, value, options, onChange, ...other }) => {
   return html`
     <label>
       ${label}
-      <select>
+      <select onChange=${(e) => onChange(e)} ${{ ...other }}>
         ${options.map(
           (opt) => html`
             <option
-              value=${opt?.value}
+              value=${opt?.value || opt}
               selected=${value === opt?.value || value === opt
                 ? "selected"
                 : undefined}

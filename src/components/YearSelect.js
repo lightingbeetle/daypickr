@@ -14,7 +14,7 @@ function populateYears(start, end) {
 }
 
 const YearSelect = ({ year }) => {
-  const { classNames, l10n, min, max } = useContext(Context);
+  const { setYear, l10n, min, max } = useContext(Context);
   const startYear = new Date(min).getFullYear();
   const endYear = new Date(max).getFullYear();
 
@@ -22,6 +22,7 @@ const YearSelect = ({ year }) => {
     label=${l10n.year}
     options=${populateYears(startYear, endYear)}
     value=${year}
+    onChange=${(e) => setYear(parseInt(e.target.value, 10))}
   />`;
 };
 
