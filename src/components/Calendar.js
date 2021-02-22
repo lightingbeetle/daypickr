@@ -53,7 +53,10 @@ const Calendar = ({ year, month }) => {
                       type="button"
                       onClick=${() => setCurrentDay(day)}
                     >
-                      ${day.toLocaleDateString()}
+                      <span class="${classes.srOnly}"
+                        >${day.toLocaleDateString()}</span
+                      >
+                      <span aria-hidden="true">${day.getDate()}</span>
                     </button>
                   </td>
                 `;
