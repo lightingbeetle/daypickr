@@ -34,6 +34,7 @@ const Daypicker = ({
         setCurrentDay,
       }}
     >
+      <strong>Selected: </strong>${selected.toLocaleDateString()}
       <div class=${classes.wrapper} role="dialog" aria-modal="true">
         <div class="${classes.header}">
           <${YearSelect} year=${year} />
