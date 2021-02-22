@@ -39,3 +39,34 @@ export function getMonthView(year, month, firstDayOfWeek) {
 
   return getRange(firstDay, lastDay);
 }
+
+export function splitToWeeks(days) {
+  const weeks = [];
+
+  for (let i = 0; i < days.length; i += 7) {
+    weeks.push(days.slice(i, i + 7));
+  }
+
+  return weeks;
+}
+
+/** reorder week days to match firstDayOfWeek settings */
+export function arrangeWeekdays(weekdays, firstDayOfWeek) {
+  const moveToEnd = weekdays.splice(0, firstDayOfWeek);
+  return [...weekdays, ...moveToEnd];
+}
+
+export function isToday(date) {
+  const today = new Date();
+  return false;
+  return datesAreEqual(today, date);
+}
+
+export function datesAreEqual(date1, date2) {
+  console.log({ date1, date2 });
+  return (
+    date1.getDate() === date2.getDate() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getFullYear() === date2.getFullYear()
+  );
+}
