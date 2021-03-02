@@ -1,4 +1,4 @@
-import { useContext } from "preact/hooks";
+import { useContext, useEffect } from "preact/hooks";
 import { html } from "htm/preact";
 import {
   getMonthView,
@@ -11,9 +11,16 @@ import {
 import Context from "./Context";
 
 const Calendar = ({ year, month }) => {
-  const { firstDayOfWeek, classes, l10n, selected, setCurrentDay } = useContext(
-    Context
-  );
+  const {
+    firstDayOfWeek,
+    classes,
+    l10n,
+    selected,
+    setCurrentDay,
+    handleKeyboardNavigation,
+    focusedRef,
+    focused,
+  } = useContext(Context);
 
   const weekdays = arrangeWeekdays(l10n.weekdays, firstDayOfWeek);
   const monthView = getMonthView(year, month, firstDayOfWeek);
@@ -52,6 +59,11 @@ const Calendar = ({ year, month }) => {
                       class="${buttonClasses.join(" ")}"
                       type="button"
                       onClick=${() => setCurrentDay(day)}
+                      tabindex=${datesAreEqual(day, focused) ? "0" : "-1"}
+                      onKeyDown=${handleKeyboardNavigation}
+                      ref=${datesAreEqual(day, focused)
+                        ? focusedRef
+                        : undefined}
                     >
                       <span class="${classes.srOnly}"
                         >${day.toLocaleDateString()}</span

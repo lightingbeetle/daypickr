@@ -1,3 +1,7 @@
+function isDate(value) {
+  return value instanceof Date && !isNaN(value.valueOf());
+}
+
 function getRange(startDate, endDate) {
   const days = [];
   let currentDay = startDate;
@@ -58,10 +62,15 @@ export function arrangeWeekdays(weekdays, firstDayOfWeek) {
 
 export function isToday(date) {
   const today = new Date();
-  today.setHours(0, 0, 0, 0);
   return datesAreEqual(today, date);
 }
 
 export function datesAreEqual(date1, date2) {
+  if (!isDate(date1) || !isDate(date2)) {
+    return false;
+  }
+
+  date1.setHours(0, 0, 0, 0);
+  date2.setHours(0, 0, 0, 0);
   return date1.getTime() === date2.getTime();
 }
