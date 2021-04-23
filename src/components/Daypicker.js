@@ -63,7 +63,7 @@ const Daypicker = ({
 
     setTimeout(() => {
       focusedElement.current.focus();
-    }, 100);
+    }, 0);
   };
 
   return html`
@@ -76,6 +76,8 @@ const Daypicker = ({
         max,
         selected,
         focused,
+        month,
+        year,
         setYear,
         setMonth,
         setCurrentDay,
@@ -87,7 +89,13 @@ const Daypicker = ({
       <strong>Selected: </strong>${selected
         ? selected.toLocaleDateString()
         : ""}
-      <div class=${classes.wrapper} role="dialog" aria-modal="true">
+      <div
+        class=${classes.wrapper}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="daypicker-label"
+      >
+        <h2 id="daypicker-label" class="sr-only">${year} ${month}</h2>
         <div class="${classes.header}">
           <${YearSelect} year=${year} />
           <${MonthSelect} month=${month} />
@@ -116,8 +124,8 @@ const Daypicker = ({
             ${l10n.nextMonth}
           </button>
         </div>
+        <${Calendar} year=${year} month=${month} />
       </div>
-      <${Calendar} year=${year} month=${month} />
     <//>
   `;
 };

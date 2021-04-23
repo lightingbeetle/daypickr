@@ -27,7 +27,7 @@ const Calendar = ({ year, month }) => {
   const weeks = splitToWeeks(monthView);
 
   return html`
-    <table role="grid" class="${classes.table}">
+    <table class="${classes.table}">
       <thead>
         <tr class="${classes.tableHeaderRow}">
           ${weekdays.map(
@@ -67,6 +67,7 @@ const Calendar = ({ year, month }) => {
                         ? focusedRef
                         : undefined}
                       disabled=${!isInCurrentMonth}
+                      aria-label=${day.toLocaleDateString()}
                     >
                       <span class="${classes.srOnly}"
                         >${day.toLocaleDateString()}</span
