@@ -1,5 +1,6 @@
 import { html } from "htm/preact";
-import { useState, useRef } from "preact/hooks";
+import { useState, useRef, useEffect } from "preact/hooks";
+import { createRef } from "preact";
 
 import classNames from "../utils/classNames";
 import l10n from "../utils/l10n";
@@ -26,7 +27,7 @@ const Daypicker = ({
     selectedDay ? new Date(selectedDay) : new Date(`${year}-${month + 1}-01`)
   );
 
-  let focusedRef = null;
+  const focusedElement = useRef();
 
   const handleKeyboardNavigation = (e) => {
     e.preventDefault();
@@ -53,8 +54,7 @@ const Daypicker = ({
     }
 
     setTimeout(() => {
-      focusedRef.focus();
-      console.log(focusedRef.children[0]);
+      focusedElement.current.focus();
     }, 100);
   };
 
@@ -73,7 +73,7 @@ const Daypicker = ({
         setCurrentDay,
         setFocused,
         handleKeyboardNavigation,
-        focusedRef: (el) => (focusedRef = el),
+        focusedRef: focusedElement,
       }}
     >
       <strong>Selected: </strong>${selected
