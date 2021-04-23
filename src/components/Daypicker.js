@@ -4,7 +4,7 @@ import { createRef } from "preact";
 
 import classNames from "../utils/classNames";
 import l10n from "../utils/l10n";
-import keyCodes from "../utils/keyCodes";
+import keyCodes, { arrowKeys } from "../utils/keyCodes";
 import Context from "./Context";
 
 import Calendar from "./Calendar";
@@ -30,7 +30,11 @@ const Daypicker = ({
   const focusedElement = useRef();
 
   const handleKeyboardNavigation = (e) => {
-    e.preventDefault();
+    if (arrowKeys.includes(e.which)) {
+      e.preventDefault();
+    } else {
+      return;
+    }
 
     const storage = new Date(focused);
 
@@ -51,6 +55,10 @@ const Daypicker = ({
         storage.setDate(storage.getDate() + 7);
         setFocused(storage);
         break;
+    }
+
+    if (storage.getMonth() !== month) {
+      setMonth(storage.getMonth());
     }
 
     setTimeout(() => {

@@ -53,6 +53,8 @@ const Calendar = ({ year, month }) => {
                     : undefined,
                 ];
 
+                const isInCurrentMonth = day.getMonth() === month;
+
                 return html`
                   <td role="gridcell" class="${classes.tableCell}">
                     <button
@@ -64,6 +66,7 @@ const Calendar = ({ year, month }) => {
                       ref=${datesAreEqual(day, focused)
                         ? focusedRef
                         : undefined}
+                      disabled=${!isInCurrentMonth}
                     >
                       <span class="${classes.srOnly}"
                         >${day.toLocaleDateString()}</span

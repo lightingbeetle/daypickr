@@ -1,4 +1,4 @@
-export default {
+const keys = {
   TAB: 9,
   ENTER: 13,
   ESC: 27,
@@ -8,3 +8,12 @@ export default {
   ARROWRIGHT: 39,
   ARROWDOWN: 40,
 };
+
+export default keys;
+
+export const arrowKeys = [
+  keys.ARROWLEFT,
+  keys.ARROWUP,
+  keys.ARROWRIGHT,
+  keys.ARROWDOWN,
+];
