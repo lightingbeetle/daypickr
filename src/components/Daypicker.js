@@ -56,13 +56,13 @@ const Daypicker = ({
 
   const prevMonth = () => {
     const newView = new Date(view);
-    newView.setMonth(newView.getMonth() - 1);
+    newView.setMonth(view.getMonth() - 1);
     setView(newView);
   }
 
   const nextMonth = () => {
     const newView = new Date(view);
-    newView.setMonth(newView.getMonth() + 1);
+    newView.setMonth(view.getMonth() + 1);
     setView(newView);
   }
 
