@@ -34,9 +34,11 @@ function getLastDayOfWeek(date, firstDayOfWeek) {
   return new Date(d.setDate(d.getDate() + diff));
 }
 
-export function getMonthView(year, month, firstDayOfWeek) {
-  const monthStart = new Date(year, month);
-  const monthEnd = new Date(year, month + 1, 0);
+export function getMonthView(view, firstDayOfWeek) {
+  const monthStart = new Date(view);
+  monthStart.setDate(1);
+  const monthEnd = new Date(view);
+  monthEnd.setMonth(view.getMonth() + 1, 0);
 
   const firstDay = getFirstDayOfWeek(monthStart, firstDayOfWeek);
   const lastDay = getLastDayOfWeek(monthEnd, firstDayOfWeek);

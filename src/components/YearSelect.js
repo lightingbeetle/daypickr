@@ -13,16 +13,21 @@ function populateYears(start, end) {
   return result;
 }
 
-const YearSelect = ({ year }) => {
-  const { setYear, l10n, min, max } = useContext(Context);
+const YearSelect = () => {
+  const { l10n, min, max, view, setView } = useContext(Context);
   const startYear = new Date(min).getFullYear();
   const endYear = new Date(max).getFullYear();
 
   return html`<${Select}
     label=${l10n.year}
     options=${populateYears(startYear, endYear)}
-    value=${year}
-    onChange=${(e) => setYear(parseInt(e.target.value, 10))}
+    value=${view.getFullYear()}
+    onChange=${(e) => {
+      const newView = new Date(view);
+      newView.setFullYear(parseInt(e.target.value, 10))
+      setView(newView)
+    }}
+
   />`;
 };
 

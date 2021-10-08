@@ -10,20 +10,20 @@ import {
 
 import Context from "./Context";
 
-const Calendar = ({ year, month }) => {
+const Calendar = () => {
   const {
     firstDayOfWeek,
     classes,
     l10n,
     selected,
-    setCurrentDay,
+    setSelected,
     handleKeyboardNavigation,
     focusedRef,
-    focused,
+    view,
   } = useContext(Context);
 
   const weekdays = arrangeWeekdays(l10n.weekdays, firstDayOfWeek);
-  const monthView = getMonthView(year, month, firstDayOfWeek);
+  const monthView = getMonthView(view, firstDayOfWeek);
   const weeks = splitToWeeks(monthView);
 
   return html`
@@ -53,17 +53,17 @@ const Calendar = ({ year, month }) => {
                     : undefined,
                 ];
 
-                const isInCurrentMonth = day.getMonth() === month;
+                const isInCurrentMonth = day.getMonth() === view.getMonth();
 
                 return html`
                   <td role="gridcell" class="${classes.tableCell}">
                     <button
                       class="${buttonClasses.join(" ")}"
                       type="button"
-                      onClick=${() => setCurrentDay(day)}
-                      tabindex=${datesAreEqual(day, focused) ? "0" : "-1"}
+                      onClick=${() => setSelected(day)}
+                      tabindex=${datesAreEqual(day, view) ? "0" : "-1"}
                       onKeyDown=${handleKeyboardNavigation}
-                      ref=${datesAreEqual(day, focused)
+                      ref=${datesAreEqual(day, view)
                         ? focusedRef
                         : undefined}
                       disabled=${!isInCurrentMonth}

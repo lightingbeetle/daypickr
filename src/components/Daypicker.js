@@ -18,14 +18,8 @@ const Daypicker = ({
   selectedDay,
   firstDayOfWeek = 0,
 }) => {
-  const [year, setYear] = useState(2000);
-  const [month, setMonth] = useState(10);
-  const [selected, setCurrentDay] = useState(
-    selectedDay ? new Date(selectedDay) : undefined
-  );
-  const [focused, setFocused] = useState(
-    selectedDay ? new Date(selectedDay) : new Date(`${year}-${month + 1}-01`)
-  );
+  const [view, setView] = useState(new Date());
+  const [selected, setSelected] = useState(selectedDay ? new Date(selectedDay) : undefined)
 
   const focusedElement = useRef();
 
@@ -36,35 +30,41 @@ const Daypicker = ({
       return;
     }
 
-    const storage = new Date(focused);
+    const newView = new Date(view);
 
     switch (e.which) {
       case keyCodes.ARROWLEFT:
-        storage.setDate(storage.getDate() - 1);
-        setFocused(storage);
+        newView.setDate(view.getDate() - 1)
         break;
       case keyCodes.ARROWRIGHT:
-        storage.setDate(storage.getDate() + 1);
-        setFocused(storage);
+        newView.setDate(view.getDate() + 1)
         break;
       case keyCodes.ARROWUP:
-        storage.setDate(storage.getDate() - 7);
-        setFocused(storage);
+        newView.setDate(view.getDate() - 7)
         break;
       case keyCodes.ARROWDOWN:
-        storage.setDate(storage.getDate() + 7);
-        setFocused(storage);
+        newView.setDate(view.getDate() + 7)
         break;
     }
 
-    if (storage.getMonth() !== month) {
-      setMonth(storage.getMonth());
-    }
+    setView(newView);
 
     setTimeout(() => {
-      focusedElement.current.focus();
+      focusedElement.current.focus()
     }, 0);
   };
+
+  const prevMonth = () => {
+    const newView = new Date(view);
+    newView.setMonth(newView.getMonth() - 1);
+    setView(newView);
+  }
+
+  const nextMonth = () => {
+    const newView = new Date(view);
+    newView.setMonth(newView.getMonth() + 1);
+    setView(newView);
+  }
 
   return html`
     <${Context.Provider}
@@ -74,14 +74,10 @@ const Daypicker = ({
         l10n,
         min,
         max,
+        view,
+        setView,
         selected,
-        focused,
-        month,
-        year,
-        setYear,
-        setMonth,
-        setCurrentDay,
-        setFocused,
+        setSelected,
         handleKeyboardNavigation,
         focusedRef: focusedElement,
       }}
@@ -95,36 +91,24 @@ const Daypicker = ({
         aria-modal="true"
         aria-labelledby="daypicker-label"
       >
-        <h2 id="daypicker-label" class="sr-only">${year} ${month}</h2>
+        <h2 id="daypicker-label" class="sr-only">${view.getFullYear()} ${view.getMonth()}</h2>
         <div class="${classes.header}">
-          <${YearSelect} year=${year} />
-          <${MonthSelect} month=${month} />
+          <${YearSelect} />
+          <${MonthSelect} />
           <button
-            onClick=${() => {
-              if (month > 0) {
-                setMonth(month - 1);
-              } else {
-                setMonth(11);
-                setYear(year - 1);
-              }
-            }}
+            type="button"
+            onClick=${prevMonth}
           >
             ${l10n.prevMonth}
           </button>
           <button
-            onClick=${() => {
-              if (month < 11) {
-                setMonth(month + 1);
-              } else {
-                setMonth(0);
-                setYear(year + 1);
-              }
-            }}
+            type="button"
+            onClick=${nextMonth}
           >
             ${l10n.nextMonth}
           </button>
         </div>
-        <${Calendar} year=${year} month=${month} />
+        <${Calendar} />
       </div>
     <//>
   `;
