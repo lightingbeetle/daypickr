@@ -17,6 +17,7 @@ const Calendar = () => {
     l10n,
     selected,
     setSelected,
+    setView,
     handleKeyboardNavigation,
     focusedRef,
     view,
@@ -60,7 +61,10 @@ const Calendar = () => {
                     <button
                       class="${buttonClasses.join(" ")}"
                       type="button"
-                      onClick=${() => setSelected(day)}
+                      onClick=${() => {
+                        setSelected(day);
+                        setView(day);
+                      }}
                       tabindex=${datesAreEqual(day, view) ? "0" : "-1"}
                       onKeyDown=${handleKeyboardNavigation}
                       ref=${datesAreEqual(day, view)
