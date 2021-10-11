@@ -5,6 +5,7 @@ import { createRef } from "preact";
 import classNames from "../utils/classNames";
 import l10n from "../utils/l10n";
 import keyCodes, { arrowKeys } from "../utils/keyCodes";
+import { getMonth } from "../utils/date";
 import Context from "./Context";
 
 import Calendar from "./Calendar";
@@ -55,15 +56,11 @@ const Daypicker = ({
   };
 
   const prevMonth = () => {
-    const newView = new Date(view);
-    newView.setMonth(view.getMonth() - 1);
-    setView(newView);
+    setView(getMonth(view, view.getMonth() - 1));
   }
 
   const nextMonth = () => {
-    const newView = new Date(view);
-    newView.setMonth(view.getMonth() + 1);
-    setView(newView);
+    setView(getMonth(view, view.getMonth() + 1));
   }
 
   return html`

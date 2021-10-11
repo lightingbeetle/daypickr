@@ -76,3 +76,10 @@ export function datesAreEqual(date1, date2) {
   date2.setHours(0, 0, 0, 0);
   return date1.getTime() === date2.getTime();
 }
+
+export function getMonth(date, month) {
+  const newMonth = new Date(date).setMonth(month);
+  const max = new Date(date.getFullYear(), month + 1, 0).getTime();
+
+  return newMonth > max ? new Date(max) : new Date(newMonth);
+}
