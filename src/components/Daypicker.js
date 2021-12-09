@@ -19,13 +19,19 @@ const Daypicker = ({
   selectedDay,
   firstDayOfWeek = 0,
   disabledDayFn = () => {},
+  inputEl,
+  outputFormat = date => date.toLocaleDateString("sk-SK"),
 }) => {
   const [view, setView] = useState(new Date());
   const [selected, setSelected] = useState(selectedDay ? new Date(selectedDay) : undefined)
 
   const focusedElement = useRef();
 
-  const handleKeyboardNavigation = (e) => {
+  useEffect(() => {
+    selected ? (inputEl.value = outputFormat(selected)) : null;
+  }, [selected]);
+
+  const handleKeyboardNavigation = e => {
     if (arrowKeys.includes(e.which)) {
       e.preventDefault();
     } else {
