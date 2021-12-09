@@ -18,6 +18,7 @@ const Daypicker = ({
   classes = classNames,
   selectedDay,
   firstDayOfWeek = 0,
+  disabledDayFn = () => {},
 }) => {
   const [view, setView] = useState(new Date());
   const [selected, setSelected] = useState(selectedDay ? new Date(selectedDay) : undefined)
@@ -77,6 +78,7 @@ const Daypicker = ({
         setSelected,
         handleKeyboardNavigation,
         focusedRef: focusedElement,
+        disabledDayFn,
       }}
     >
       <strong>Selected: </strong>${selected
