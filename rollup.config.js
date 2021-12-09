@@ -20,4 +20,7 @@ export default {
     browsersync({ server: "public", files: ["public/*"] }),
     production && terser(), // minify, but only in production
   ],
+  watch: {
+    include: 'src/**',
+  }
 };
