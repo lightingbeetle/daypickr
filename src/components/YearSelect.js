@@ -1,8 +1,8 @@
-import { useState, useContext } from "preact/hooks";
-import { html } from "htm/preact";
+import { useContext } from 'preact/hooks';
+import { html } from 'htm/preact';
 
-import Context from "./Context";
-import Select from "./Select";
+import Context from './Context';
+import Select from './Select';
 
 function populateYears(start, end) {
   const result = [];
@@ -24,10 +24,9 @@ const YearSelect = () => {
     value=${view.getFullYear()}
     onChange=${(e) => {
       const newView = new Date(view);
-      newView.setFullYear(parseInt(e.target.value, 10))
-      setView(newView)
+      newView.setFullYear(parseInt(e.target.value, 10));
+      setView(newView);
     }}
-
   />`;
 };
 

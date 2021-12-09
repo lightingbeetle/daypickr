@@ -1,14 +1,8 @@
-import { useContext, useEffect } from "preact/hooks";
-import { html } from "htm/preact";
-import {
-  getMonthView,
-  splitToWeeks,
-  arrangeWeekdays,
-  isToday,
-  datesAreEqual,
-} from "../utils/date";
+import { useContext } from 'preact/hooks';
+import { html } from 'htm/preact';
+import { getMonthView, splitToWeeks, arrangeWeekdays, isToday, datesAreEqual } from '../utils/date';
 
-import Context from "./Context";
+import Context from './Context';
 
 const Calendar = () => {
   const {
@@ -50,9 +44,7 @@ const Calendar = () => {
                 const buttonClasses = [
                   classes.dayButton,
                   isToday(day) ? classes.isToday : undefined,
-                  selected && datesAreEqual(day, selected)
-                    ? classes.isSelected
-                    : undefined,
+                  selected && datesAreEqual(day, selected) ? classes.isSelected : undefined,
                 ];
 
                 const isInCurrentMonth = day.getMonth() === view.getMonth();
@@ -60,23 +52,19 @@ const Calendar = () => {
                 return html`
                   <td role="gridcell" class="${classes.tableCell}">
                     <button
-                      class="${buttonClasses.join(" ")}"
+                      class="${buttonClasses.join(' ')}"
                       type="button"
                       onClick=${() => {
                         setSelected(day);
                         setView(day);
                       }}
-                      tabindex=${datesAreEqual(day, view) ? "0" : "-1"}
+                      tabindex=${datesAreEqual(day, view) ? '0' : '-1'}
                       onKeyDown=${handleKeyboardNavigation}
-                      ref=${datesAreEqual(day, view)
-                        ? focusedRef
-                        : undefined}
+                      ref=${datesAreEqual(day, view) ? focusedRef : undefined}
                       disabled=${!isInCurrentMonth || disabledDayFn(day)}
                       aria-label=${day.toLocaleDateString()}
                     >
-                      <span class="${classes.srOnly}"
-                        >${day.toLocaleDateString()}</span
-                      >
+                      <span class="${classes.srOnly}">${day.toLocaleDateString()}</span>
                       <span aria-hidden="true">${day.getDate()}</span>
                     </button>
                   </td>

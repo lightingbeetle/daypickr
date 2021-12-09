@@ -11,9 +11,4 @@ const keys = {
 
 export default keys;
 
-export const arrowKeys = [
-  keys.ARROWLEFT,
-  keys.ARROWUP,
-  keys.ARROWRIGHT,
-  keys.ARROWDOWN,
-];
+export const arrowKeys = [keys.ARROWLEFT, keys.ARROWUP, keys.ARROWRIGHT, keys.ARROWDOWN];

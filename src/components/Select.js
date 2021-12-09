@@ -1,4 +1,4 @@
-import { html } from "htm/preact";
+import { html } from 'htm/preact';
 
 const Select = ({ label, value, options, onChange, ...other }) => {
   return html`
@@ -9,9 +9,7 @@ const Select = ({ label, value, options, onChange, ...other }) => {
           (opt) => html`
             <option
               value=${opt?.value || opt}
-              selected=${value === opt?.value || value === opt
-                ? "selected"
-                : undefined}
+              selected=${value === opt?.value || value === opt ? 'selected' : undefined}
             >
               ${opt?.text ? opt.text : opt}
             </option>
