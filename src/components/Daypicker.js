@@ -17,6 +17,7 @@ const Daypicker = ({
   classes = classNames,
   selectedDay,
   firstDayOfWeek = 1,
+  locale = {},
   disabledDayFn = () => {},
   inputEl,
   outputFormat = (date) => date.toLocaleDateString('sk-SK'),
@@ -84,6 +85,7 @@ const Daypicker = ({
         handleKeyboardNavigation,
         focusedRef: focusedElement,
         disabledDayFn,
+        locale,
       }}
     >
       <strong>Selected: </strong>${selected ? selected.toLocaleDateString('sk-SK') : ''}

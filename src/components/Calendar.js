@@ -16,6 +16,7 @@ const Calendar = () => {
     focusedRef,
     view,
     disabledDayFn,
+    locale,
   } = useContext(Context);
 
   const weekdays = arrangeWeekdays(l10n.weekdays, firstDayOfWeek);
@@ -62,9 +63,9 @@ const Calendar = () => {
                       onKeyDown=${handleKeyboardNavigation}
                       ref=${datesAreEqual(day, view) ? focusedRef : undefined}
                       disabled=${!isInCurrentMonth || disabledDayFn(day)}
-                      aria-label=${day.toLocaleDateString()}
+                      aria-label=${day.toLocaleDateString(locale)}
                     >
-                      <span class="${classes.srOnly}">${day.toLocaleDateString()}</span>
+                      <span class="${classes.srOnly}">${day.toLocaleDateString(locale)}</span>
                       <span aria-hidden="true">${day.getDate()}</span>
                     </button>
                   </td>
