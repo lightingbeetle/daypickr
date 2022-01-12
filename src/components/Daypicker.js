@@ -19,8 +19,7 @@ const Daypicker = ({
   firstDayOfWeek = 1,
   locale = {},
   disabledDayFn = () => {},
-  inputEl,
-  outputFormat = (date) => date.toLocaleDateString('sk-SK'),
+  onSelect = () => {},
 }) => {
   const [view, setView] = useState(selectedDay ? new Date(selectedDay) : new Date());
   const [selected, setSelected] = useState(selectedDay ? new Date(selectedDay) : undefined);
@@ -28,7 +27,7 @@ const Daypicker = ({
   const focusedElement = useRef();
 
   useEffect(() => {
-    selected ? (inputEl.value = outputFormat(selected)) : null;
+    onSelect(selected);
   }, [selected]);
 
   const handleKeyboardNavigation = (e) => {
@@ -88,7 +87,6 @@ const Daypicker = ({
         locale,
       }}
     >
-      <strong>Selected: </strong>${selected ? selected.toLocaleDateString('sk-SK') : ''}
       <div
         class=${classes.wrapper}
         role="dialog"
