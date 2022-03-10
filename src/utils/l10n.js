@@ -4,13 +4,13 @@ export default {
   month: 'Month',
   year: 'Year',
   weekdays: [
-    { name: 'Sunday', shortname: 'Sun' },
-    { name: 'Monday', shortname: 'Mon' },
-    { name: 'Tuesday', shortname: 'Tue' },
-    { name: 'Wednesday', shortname: 'Wed' },
-    { name: 'Thursday', shortname: 'Thu' },
-    { name: 'Friday', shortname: 'Fri' },
-    { name: 'Saturday', shortname: 'Sat' },
+    { name: 'Sunday', shortname: 'Su' },
+    { name: 'Monday', shortname: 'Mo' },
+    { name: 'Tuesday', shortname: 'Tu' },
+    { name: 'Wednesday', shortname: 'We' },
+    { name: 'Thursday', shortname: 'Th' },
+    { name: 'Friday', shortname: 'Fr' },
+    { name: 'Saturday', shortname: 'Sa' },
   ],
   months: [
     'January',
@@ -26,4 +26,6 @@ export default {
     'November',
     'December',
   ],
+  openButton: 'Choose date',
+  closeButton: 'Close',
 };
