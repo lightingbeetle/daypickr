@@ -21,6 +21,15 @@ const Daypicker = ({
   disabledDayFn = () => {},
   onSelect = () => {},
   formatDate = (date) => dateToYYYYMMDD(date),
+  parseDate = (date) => {
+    const matches = date.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+
+    if (matches) {
+      return new Date(matches[3], matches[2] - 1, matches[1]);
+    }
+
+    return false;
+  },
   name,
   id,
 }) => {
@@ -131,6 +140,17 @@ const Daypicker = ({
     setIsDialogOpen(!isDialogOpen);
   };
 
+  const onInputChange = (e) => {
+    if (e.target.value === '') {
+      setSelected(undefined);
+    }
+
+    const date = parseDate(e.target.value);
+    if (date) {
+      return setSelected(date);
+    }
+  };
+
   return html`
     <${Context.Provider}
       value=${{
@@ -153,8 +173,9 @@ const Daypicker = ({
         type="text"
         class=${classes.input}
         value=${selected && selected.toLocaleDateString(locale)}
+        onChange=${(e) => onInputChange(e)}
       />
-      <input type="hidden" value=${selected && formatDate(selected)} id=${id} name=${name} />
+      <input type="hidden" value=${formatDate(selected)} id=${id} name=${name} />
       <button
         type="button"
         aria-controls="${id}-dialog"

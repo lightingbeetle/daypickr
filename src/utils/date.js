@@ -86,6 +86,10 @@ export function getMonth(date, month) {
 }
 
 export function dateToYYYYMMDD(date) {
+  if (!date || !date instanceof Date) {
+    return '';
+  }
+
   return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date
     .getDate()
     .toString()
