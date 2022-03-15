@@ -35,6 +35,7 @@ const Daypicker = ({
 
   useEffect(() => {
     onSelect(selected);
+    setIsDialogOpen(false);
   }, [selected]);
 
   useEffect(() => {
