@@ -1,5 +1,5 @@
 import { html } from 'htm/preact';
-import { useState, useRef, useEffect, useCallback, useLayoutEffect } from 'preact/hooks';
+import { useState, useRef, useEffect, useLayoutEffect } from 'preact/hooks';
 
 import classNames from '../utils/classNames';
 import l10n from '../utils/l10n';
