@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useCallback, useLayoutEffect } from 'preac
 import classNames from '../utils/classNames';
 import l10n from '../utils/l10n';
 import keyCodes, { arrowKeys } from '../utils/keyCodes';
-import { getMonth } from '../utils/date';
+import { getMonth, dateToYYYYMMDD } from '../utils/date';
 import Context from './Context';
 
 import Calendar from './Calendar';
@@ -20,6 +20,7 @@ const Daypicker = ({
   locale = {},
   disabledDayFn = () => {},
   onSelect = () => {},
+  formatDate = (date) => dateToYYYYMMDD(date),
   name,
   id,
 }) => {
@@ -153,7 +154,7 @@ const Daypicker = ({
         class=${classes.input}
         value=${selected && selected.toLocaleDateString(locale)}
       />
-      <input type="hidden" value=${selected} id=${id} name=${name} />
+      <input type="hidden" value=${selected && formatDate(selected)} id=${id} name=${name} />
       <button
         type="button"
         aria-controls="${id}-dialog"
