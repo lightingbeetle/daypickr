@@ -147,6 +147,7 @@ const Daypicker = ({
 
     const date = parseDate(e.target.value);
     if (date) {
+      setView(date);
       return setSelected(date);
     }
   };
