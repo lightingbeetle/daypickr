@@ -2,7 +2,7 @@
   "name": "daypicker",
   "version": "0.0.1",
   "description": "An accessible, interactive widget for selecting a day which populates an input field with a date.",
-  "main": "public/daypicker-preact.js",
+  "main": "public/daypicker.js",
   "scripts": {
     "build": "rollup -c",
     "start": "rollup -c -w",
