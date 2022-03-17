@@ -7,11 +7,3 @@ function dayPicker(element, options) {
 }
 
 export default dayPicker;
-
-const daypickers = Array.from(document.querySelectorAll('[data-daypicker]'));
-
-daypickers.map((element) => {
-  dayPicker(element, {
-    disabledDayFn: (date) => [6, 0].includes(date.getDay()),
-  });
-});
