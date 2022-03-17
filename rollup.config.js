@@ -8,11 +8,12 @@ import browsersync from 'rollup-plugin-browsersync';
 const production = !process.env.ROLLUP_WATCH;
 
 export default {
-  input: 'src/daypicker-preact.js',
+  input: 'src/daypicker.js',
   output: {
-    file: 'public/daypicker-preact.js',
+    file: 'public/daypicker.js',
     format: 'cjs',
     sourcemap: true,
+    exports: 'default',
   },
   plugins: [
     resolve(), // tells Rollup how to find date-fns in node_modules
