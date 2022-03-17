@@ -2,7 +2,6 @@ export default {
   wrapper: 'daypicker',
   header: 'daypicker__header',
   select: 'daypicker__select',
-  selectDisplay: 'daypicker__select-display',
   monthSelect: 'daypicker__select--month',
   yearSelect: 'daypicker__select--year',
   button: 'daypicker__button',

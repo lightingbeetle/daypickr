@@ -12,7 +12,6 @@ const Select = forwardRef(
     return html`
       <label>
         <span class="sr-only">${label}</span>
-        <span class="daypicker__select-display"></span>
         <select
           className="${concat(classes.select, className)}"
           onChange=${(e) => onChange(e)}
