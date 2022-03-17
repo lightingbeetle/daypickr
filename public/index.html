@@ -35,12 +35,14 @@
   <div id="root-daypickers"></div> 
   <script src='daypicker.js'></script>
   <script>
-    const daypickers = Array.from(document.querySelectorAll('[data-daypicker]'));
+    window.addEventListener('DOMContentLoaded', () => {
+      const daypickers = Array.from(document.querySelectorAll('[data-daypicker]'));
 
-    daypickers.map((element) => {
-      dayPicker(element, {
-        disabledDayFn: (date) => [6, 0].includes(date.getDay()),
+      daypickers.map((element) => {
+        dayPicker(element, {
+          disabledDayFn: (date) => [6, 0].includes(date.getDay()),
+        });
       });
-    });
+    })
   </script>
 </html>
