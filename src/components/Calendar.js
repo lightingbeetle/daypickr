@@ -60,7 +60,7 @@ const Calendar = () => {
                         setView(day);
                       }}
                       tabindex=${datesAreEqual(day, view) ? '0' : '-1'}
-                      onKeyDown=${handleKeyboardNavigation}
+                      onKeyUp=${handleKeyboardNavigation}
                       ref=${datesAreEqual(day, view) ? focusedRef : undefined}
                       disabled=${!isInCurrentMonth || disabledDayFn(day)}
                       aria-label=${day.toLocaleDateString(locale)}
