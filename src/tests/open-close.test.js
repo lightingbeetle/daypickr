@@ -1,68 +1,56 @@
-import { html } from 'htm/preact';
-import { render, screen, fireEvent, waitFor } from '@testing-library/preact';
+import { screen, fireEvent, waitFor } from '@testing-library/preact';
 
-import Daypicker from '../components/Daypicker';
-
-const example = html`<${Daypicker} />`;
-
-function getExample() {
-  render(example);
-
-  return {
-    button: screen.getByText('Choose date'),
-    dialog: screen.getByRole('dialog', { hidden: true }),
-  };
-}
+import { renderExample } from './utils';
 
 describe('toggle', () => {
-  test('toggle button', async () => {
+  test('toggle toggleButton', async () => {
     expect.assertions(2);
-    const { button, dialog } = getExample();
+    const { toggleButton, dialog, user } = renderExample();
 
-    fireEvent.click(button);
+    await user.click(toggleButton);
     await waitFor(() => expect(dialog).toBeVisible());
-    await waitFor(() => expect(button.getAttribute('aria-expanded')).toBe('true'));
+    await waitFor(() => expect(toggleButton.getAttribute('aria-expanded')).toBe('true'));
   });
 
   test('close on click', async () => {
     expect.assertions(2);
+    const { toggleButton, dialog, user } = renderExample();
 
-    const { button, dialog } = getExample();
-    fireEvent.click(button);
-    fireEvent.click(button);
+    await user.click(toggleButton);
+    await user.click(toggleButton);
     await waitFor(() => expect(dialog).not.toBeVisible());
-    await waitFor(() => expect(button.getAttribute('aria-expanded')).toBe('false'));
+    await waitFor(() => expect(toggleButton.getAttribute('aria-expanded')).toBe('false'));
   });
 
   test('close on ESC', async () => {
     expect.assertions(2);
-    const { button, dialog } = getExample();
+    const { toggleButton, dialog, user } = renderExample();
 
-    fireEvent.click(button);
-    fireEvent.keyDown(dialog, { key: 'Escape' });
+    await user.click(toggleButton);
+    await user.keyboard('{Escape}');
     await waitFor(() => expect(dialog).not.toBeVisible());
-    await waitFor(() => expect(button.getAttribute('aria-expanded')).toBe('false'));
+    await waitFor(() => expect(toggleButton.getAttribute('aria-expanded')).toBe('false'));
   });
 
   test('close on select', async () => {
     expect.assertions(2);
-    const { button, dialog } = getExample();
-    fireEvent.click(button);
+    const { toggleButton, dialog, user } = renderExample();
 
+    await user.click(toggleButton);
     const today = dialog.querySelector('.isToday');
-    fireEvent.click(today);
+    await user.click(today);
     await waitFor(() => expect(dialog).not.toBeVisible());
-    await waitFor(() => expect(button.getAttribute('aria-expanded')).toBe('false'));
+    await waitFor(() => expect(toggleButton.getAttribute('aria-expanded')).toBe('false'));
   });
 
   test('close on close click', async () => {
     expect.assertions(2);
-    const { button, dialog } = getExample();
+    const { toggleButton, dialog, user } = renderExample();
+    await user.click(toggleButton);
 
-    fireEvent.click(button);
-    const close = screen.getByText('Close');
-    fireEvent.click(close);
+    const closeButton = screen.getByText('Close');
+    await user.click(closeButton);
     await waitFor(() => expect(dialog).not.toBeVisible());
-    await waitFor(() => expect(button.getAttribute('aria-expanded')).toBe('false'));
+    await waitFor(() => expect(toggleButton.getAttribute('aria-expanded')).toBe('false'));
   });
 });

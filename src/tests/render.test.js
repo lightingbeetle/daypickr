@@ -1,26 +1,25 @@
 import { html } from 'htm/preact';
-import { render, screen } from '@testing-library/preact';
 
 import Daypicker from '../components/Daypicker';
+import { renderExample } from './utils';
+
+const example = html`<${Daypicker} />`;
 
 describe('render', () => {
-  const example = html`<${Daypicker} />`;
-
   test('initial', () => {
-    const { container } = render(example);
+    const { container } = renderExample();
     expect(container).toBeInTheDocument();
   });
 
   test('dialog', () => {
-    render(example);
-    const dialog = screen.getByRole('dialog', { hidden: true });
+    const { dialog } = renderExample();
     expect(dialog).toBeInTheDocument();
   });
 
   test('default day is today', () => {
     expect.assertions(2);
-    const { container } = render(example);
-    const todayButton = container.querySelector('.isToday');
+    const { table } = renderExample();
+    const todayButton = table.querySelector('.isToday');
 
     expect(todayButton.getAttribute('aria-label')).toBe(new Date().toLocaleDateString());
     expect(todayButton.getAttribute('tabindex')).toBe('0');
