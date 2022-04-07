@@ -69,12 +69,12 @@ const Daypicker = ({
       }
     };
 
-    document.addEventListener('keydown', focusTrap);
-    document.addEventListener('keydown', closeOnEsc);
+    document.addEventListener('keyup', focusTrap);
+    document.addEventListener('keyup', closeOnEsc);
 
     return () => {
-      document.removeEventListener('keydown', focusTrap);
-      document.removeEventListener('keydown', closeOnEsc);
+      document.removeEventListener('keyup', focusTrap);
+      document.removeEventListener('keyup', closeOnEsc);
     };
   });
 
