@@ -76,7 +76,7 @@ const Daypicker = ({
       document.removeEventListener('keydown', focusTrap);
       document.removeEventListener('keydown', closeOnEsc);
     };
-  });
+  }, []);
 
   useEffect(() => {
     const closeOnClickOutside = (e) => {
@@ -87,7 +87,7 @@ const Daypicker = ({
     document.addEventListener('click', closeOnClickOutside);
 
     return () => document.removeEventListener('click', closeOnClickOutside);
-  });
+  }, []);
 
   useLayoutEffect(() => {
     if (isDialogOpen) {
