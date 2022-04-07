@@ -49,20 +49,22 @@ const Calendar = () => {
                 ];
 
                 const isInCurrentMonth = day.getMonth() === view.getMonth();
-
+                const isDisabled = !isInCurrentMonth || disabledDayFn(day);
                 return html`
                   <td role="gridcell" class="${classes.tableCell}">
                     <button
                       class="${buttonClasses.join(' ')}"
                       type="button"
                       onClick=${() => {
-                        setSelected(day);
-                        setView(day);
+                        if (!isDisabled) {
+                          setSelected(day);
+                          setView(day);
+                        }
                       }}
                       tabindex=${datesAreEqual(day, view) ? '0' : '-1'}
                       onKeyUp=${handleKeyboardNavigation}
                       ref=${datesAreEqual(day, view) ? focusedRef : undefined}
-                      disabled=${!isInCurrentMonth || disabledDayFn(day)}
+                      aria-disabled=${!isInCurrentMonth || disabledDayFn(day)}
                       aria-label=${day.toLocaleDateString(locale)}
                     >
                       <span class="${classes.srOnly}">${day.toLocaleDateString(locale)}</span>
