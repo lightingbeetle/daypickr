@@ -176,7 +176,7 @@ const Daypicker = ({
         value=${selected && selected.toLocaleDateString(locale)}
         onChange=${(e) => onInputChange(e)}
       />
-      <input type="hidden" value=${formatDate(selected)} name=${name} />
+      <input type="hidden" id=${`${id}-value`} value=${formatDate(selected)} name=${name} />
       <button
         type="button"
         aria-controls="${id}-dialog"
