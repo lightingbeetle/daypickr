@@ -3,7 +3,6 @@ import { useState, useRef, useEffect, useLayoutEffect } from 'preact/hooks';
 
 import classNames from '../utils/classNames';
 import l10n from '../utils/l10n';
-import keyCodes, { arrowKeys } from '../utils/keyCodes';
 import { getMonth, dateToYYYYMMDD } from '../utils/date';
 import Context from './Context';
 
@@ -98,7 +97,7 @@ const Daypicker = ({
   }, [isDialogOpen]);
 
   const handleKeyboardNavigation = (e) => {
-    if (arrowKeys.includes(e.which)) {
+    if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
       e.preventDefault();
     } else {
       return;
@@ -106,17 +105,17 @@ const Daypicker = ({
 
     const newView = new Date(view);
 
-    switch (e.which) {
-      case keyCodes.ARROWLEFT:
+    switch (e.key) {
+      case 'ArrowLeft':
         newView.setDate(view.getDate() - 1);
         break;
-      case keyCodes.ARROWRIGHT:
+      case 'ArrowRight':
         newView.setDate(view.getDate() + 1);
         break;
-      case keyCodes.ARROWUP:
+      case 'ArrowUp':
         newView.setDate(view.getDate() - 7);
         break;
-      case keyCodes.ARROWDOWN:
+      case 'ArrowDown':
         newView.setDate(view.getDate() + 7);
         break;
     }
