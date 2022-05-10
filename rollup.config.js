@@ -11,7 +11,8 @@ export default {
   input: 'src/daypicker.js',
   output: {
     file: 'public/daypicker.js',
-    format: 'cjs',
+    format: 'umd',
+    name: 'dayPicker',
     sourcemap: true,
     exports: 'default',
   },
