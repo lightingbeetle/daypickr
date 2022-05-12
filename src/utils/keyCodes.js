@@ -7,8 +7,21 @@ const keys = {
   ARROWUP: 38,
   ARROWRIGHT: 39,
   ARROWDOWN: 40,
+  PAGEUP: 33,
+  PAGEDOWN: 34,
+  END: 35,
+  HOME: 36,
 };
 
 export default keys;
 
-export const arrowKeys = [keys.ARROWLEFT, keys.ARROWUP, keys.ARROWRIGHT, keys.ARROWDOWN];
+export const navigationKeys = [
+  keys.ARROWLEFT,
+  keys.ARROWUP,
+  keys.ARROWRIGHT,
+  keys.ARROWDOWN,
+  keys.PAGEUP,
+  keys.PAGEDOWN,
+  keys.HOME,
+  keys.END,
+];

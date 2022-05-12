@@ -1,6 +1,13 @@
 import { useContext } from 'preact/hooks';
 import { html } from 'htm/preact';
-import { getMonthView, splitToWeeks, arrangeWeekdays, isToday, datesAreEqual } from '../utils/date';
+import {
+  getMonthView,
+  splitToWeeks,
+  arrangeWeekdays,
+  isToday,
+  datesAreEqual,
+  isDayInCurrentMonth,
+} from '../utils/date';
 
 import Context from './Context';
 
@@ -42,13 +49,16 @@ const Calendar = () => {
           (week) => html`
             <tr class="${classes.tableRow}">
               ${week.map((day) => {
-                const buttonClasses = [
-                  classes.dayButton,
-                  isToday(day) ? classes.isToday : undefined,
-                  selected && datesAreEqual(day, selected) ? classes.isSelected : undefined,
-                ];
+                const isSelected = selected && datesAreEqual(day, selected);
+                const isFocused = datesAreEqual(day, view);
+                const isDisabled = !isDayInCurrentMonth(day, view) || disabledDayFn(day);
+                const todayClass = isToday(day) ? classes.isToday : undefined;
+                const selectedClass = isSelected ? classes.isSelected : undefined;
 
-                const isInCurrentMonth = day.getMonth() === view.getMonth();
+                const buttonClasses = [classes.dayButton, todayClass, selectedClass];
+                const buttonTabIndex = isFocused ? '0' : '-1';
+                const localeDateString = day.toLocaleDateString(locale);
+                const ref = isFocused ? focusedRef : undefined;
 
                 return html`
                   <td role="gridcell" class="${classes.tableCell}">
@@ -59,13 +69,14 @@ const Calendar = () => {
                         setSelected(day);
                         setView(day);
                       }}
-                      tabindex=${datesAreEqual(day, view) ? '0' : '-1'}
+                      tabindex=${buttonTabIndex}
                       onKeyDown=${handleKeyboardNavigation}
-                      ref=${datesAreEqual(day, view) ? focusedRef : undefined}
-                      disabled=${!isInCurrentMonth || disabledDayFn(day)}
-                      aria-label=${day.toLocaleDateString(locale)}
+                      ref=${ref}
+                      disabled=${isDisabled}
+                      aria-label=${localeDateString}
+                      aria-selected=${isSelected}
                     >
-                      <span class="${classes.srOnly}">${day.toLocaleDateString(locale)}</span>
+                      <span class="${classes.srOnly}">${localeDateString}</span>
                       <span aria-hidden="true">${day.getDate()}</span>
                     </button>
                   </td>

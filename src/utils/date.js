@@ -34,6 +34,10 @@ function getLastDayOfWeek(date, firstDayOfWeek) {
   return new Date(d.setDate(d.getDate() + diff));
 }
 
+export function getDaysInMonth(month, year) {
+  return new Date(year, month + 1, 0).getDate();
+}
+
 export function getMonthView(view, firstDayOfWeek) {
   const monthStart = new Date(view);
   monthStart.setDate(1);
@@ -83,6 +87,10 @@ export function getMonth(date, month) {
   const max = new Date(date.getFullYear(), month + 1, 0).getTime();
 
   return newMonth > max ? new Date(max) : new Date(newMonth);
+}
+
+export function isDayInCurrentMonth(day, view) {
+  return day.getMonth() === view.getMonth();
 }
 
 export function dateToYYYYMMDD(date) {
