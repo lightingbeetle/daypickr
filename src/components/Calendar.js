@@ -66,13 +66,15 @@ const Calendar = () => {
                       class="${buttonClasses.join(' ')}"
                       type="button"
                       onClick=${() => {
-                        setSelected(day);
-                        setView(day);
+                        if (!isDisabled) {
+                          setSelected(day);
+                          setView(day);
+                        }
                       }}
                       tabindex=${buttonTabIndex}
-                      onKeyDown=${handleKeyboardNavigation}
+                      onKeyUp=${handleKeyboardNavigation}
                       ref=${ref}
-                      disabled=${isDisabled}
+                      aria-disabled=${isDisabled}
                       aria-label=${localeDateString}
                       aria-selected=${isSelected}
                     >
