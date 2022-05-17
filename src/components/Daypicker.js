@@ -3,7 +3,7 @@ import { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'preac
 
 import classNames from '../utils/classNames';
 import l10n from '../utils/l10n';
-import { getMonth, dateToYYYYMMDD, arrangeWeekdays, getDaysInMonth } from '../utils/date';
+import { getMonth, dateToYYYYMMDD, getLastDayOfWeek, getFirstDayOfWeek } from '../utils/date';
 import Context from './Context';
 
 import Calendar from './Calendar';
@@ -96,34 +96,6 @@ const Daypicker = ({
     }
   }, [isDialogOpen, yearSelectRef.current, toggleButtonRef.current]);
 
-  /**
-   * Function to skip disabled dates and navigate to the closest enabled date in that month
-   * @param {Date} view Selected calendar date value
-   * @param {number} step Step amount to search for closest enabled date
-   */
-  const setClosestAvailableDateInMonth = useCallback(
-    (view, step = 1) => {
-      const isDisabled = disabledDayFn?.(view) ?? false;
-      if (!isDisabled) return;
-
-      const viewDate = view.getDate();
-      const viewMonth = view.getMonth();
-      const viewYear = view.getFullYear();
-
-      const monthDays = getDaysInMonth(viewMonth, viewYear);
-      const isFirstDayOfMonth = viewDate === 1;
-      const isLastDayOfMonth = viewDate === monthDays;
-      // switch search direction if start or end of the month
-      if ((isFirstDayOfMonth && step === -1) || (isLastDayOfMonth && step === 1)) {
-        step *= -1;
-      }
-
-      view.setDate(viewDate + step);
-      setClosestAvailableDateInMonth(view, step);
-    },
-    [disabledDayFn]
-  );
-
   // https://www.w3.org/TR/wai-aria-practices/examples/dialog-modal/datepicker-dialog.html#kbd_label_5
   const handleKeyboardNavigation = (e) => {
     const navigationKeys = [
@@ -144,11 +116,6 @@ const Daypicker = ({
 
     let newView = new Date(view);
 
-    const weekdaysSorted = arrangeWeekdays([0, 1, 2, 3, 4, 5, 6], firstDayOfWeek);
-
-    const getFirstWeekdayDiff = (day) => weekdaysSorted.indexOf(day);
-    const getLastWeekdayDiff = (day) => weekdaysSorted.reverse().indexOf(day);
-
     switch (e.key) {
       case 'ArrowLeft':
         newView.setDate(view.getDate() - 1);
@@ -168,7 +135,6 @@ const Daypicker = ({
         } else {
           newView = getPrevMonthDate(view);
         }
-        setClosestAvailableDateInMonth(newView, -1);
         break;
       case 'PageDown':
         if (e.shiftKey) {
@@ -176,15 +142,12 @@ const Daypicker = ({
         } else {
           newView = getNextMonthDate(view);
         }
-        setClosestAvailableDateInMonth(newView, 1);
         break;
       case 'Home':
-        newView.setDate(view.getDate() - getFirstWeekdayDiff(view.getDay()));
-        setClosestAvailableDateInMonth(newView, 1);
+        newView = getFirstDayOfWeek(view, firstDayOfWeek);
         break;
       case 'End':
-        newView.setDate(view.getDate() + getLastWeekdayDiff(view.getDay()));
-        setClosestAvailableDateInMonth(newView, -1);
+        newView = getLastDayOfWeek(view, firstDayOfWeek);
         break;
     }
 
@@ -195,16 +158,12 @@ const Daypicker = ({
     }, 0);
   };
 
-  const getRelativeMonthDate = (view, step) => {
-    return getMonth(view, view.getMonth() + step);
-  };
-
   const getPrevMonthDate = (view) => {
-    return getRelativeMonthDate(view, -1);
+    return getMonth(view, view.getMonth() - 1);
   };
 
   const getNextMonthDate = (view) => {
-    return getRelativeMonthDate(view, 1);
+    return getMonth(view, view.getMonth() + 1)
   };
 
   const prevMonth = () => {
