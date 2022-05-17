@@ -1,9 +1,4 @@
-import { html } from 'htm/preact';
-
-import Daypicker from '../components/Daypicker';
 import { renderExample } from './utils';
-
-const example = html`<${Daypicker} />`;
 
 describe('render', () => {
   test('initial', () => {
