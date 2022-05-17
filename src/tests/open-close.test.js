@@ -1,4 +1,4 @@
-import { screen, fireEvent, waitFor } from '@testing-library/preact';
+import { screen, waitFor } from '@testing-library/preact';
 
 import { renderExample } from './utils';
 
@@ -50,6 +50,16 @@ describe('toggle', () => {
 
     const closeButton = screen.getByText('Close');
     await user.click(closeButton);
+    await waitFor(() => expect(dialog).not.toBeVisible());
+    await waitFor(() => expect(toggleButton.getAttribute('aria-expanded')).toBe('false'));
+  });
+
+  test('close on outside click', async () => {
+    expect.assertions(2);
+    const { toggleButton, dialog, user } = renderExample();
+
+    await user.click(toggleButton);
+    await user.click(document.body);
     await waitFor(() => expect(dialog).not.toBeVisible());
     await waitFor(() => expect(toggleButton.getAttribute('aria-expanded')).toBe('false'));
   });
