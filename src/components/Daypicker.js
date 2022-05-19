@@ -58,7 +58,7 @@ const Daypicker = ({
 
         if (e.shiftKey && document.activeElement === yearSelectRef.current) {
           e.preventDefault();
-          focusedElement.current.focus();
+          closeButtonRef.current.focus();
         }
       }
     };
@@ -76,7 +76,7 @@ const Daypicker = ({
       document.removeEventListener('keydown', focusTrap);
       document.removeEventListener('keydown', closeOnEsc);
     };
-  }, [isDialogOpen, closeButtonRef.current, yearSelectRef.current, focusedElement.current]);
+  }, [isDialogOpen, closeButtonRef.current, yearSelectRef.current]);
 
   useEffect(() => {
     const closeOnClickOutside = (e) => {
