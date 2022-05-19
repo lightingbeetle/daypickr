@@ -69,12 +69,12 @@ const Daypicker = ({
       }
     };
 
-    document.addEventListener('keyup', focusTrap);
-    document.addEventListener('keyup', closeOnEsc);
+    document.addEventListener('keydown', focusTrap);
+    document.addEventListener('keydown', closeOnEsc);
 
     return () => {
-      document.removeEventListener('keyup', focusTrap);
-      document.removeEventListener('keyup', closeOnEsc);
+      document.removeEventListener('keydown', focusTrap);
+      document.removeEventListener('keydown', closeOnEsc);
     };
   }, [isDialogOpen, closeButtonRef.current, yearSelectRef.current, focusedElement.current]);
 
@@ -209,6 +209,7 @@ const Daypicker = ({
         class=${classes.input}
         value=${selected && selected.toLocaleDateString(locale)}
         onChange=${(e) => onInputChange(e)}
+        ref=${inputRef}
       />
       <input type="hidden" id=${`${id}-value`} value=${formatDate(selected)} name=${name} />
       <button
