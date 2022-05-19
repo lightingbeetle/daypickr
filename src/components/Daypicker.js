@@ -98,58 +98,50 @@ const Daypicker = ({
 
   // https://www.w3.org/TR/wai-aria-practices/examples/dialog-modal/datepicker-dialog.html#kbd_label_5
   const handleKeyboardNavigation = (e) => {
-    const navigationKeys = [
-      'ArrowLeft',
-      'ArrowRight',
-      'ArrowUp',
-      'ArrowDown',
-      'PageUp',
-      'PageDown',
-      'Home',
-      'End',
-    ];
-    if (navigationKeys.includes(e.key)) {
-      e.preventDefault();
-    } else {
-      return;
-    }
-
     let newView = new Date(view);
-
-    switch (e.key) {
-      case 'ArrowLeft':
+    
+    const keyActions = {
+      'ArrowLeft': () => {
         newView.setDate(view.getDate() - 1);
-        break;
-      case 'ArrowRight':
+      },
+      'ArrowRight': () => {
         newView.setDate(view.getDate() + 1);
-        break;
-      case 'ArrowUp':
+      },
+      'ArrowUp': () => {
         newView.setDate(view.getDate() - 7);
-        break;
-      case 'ArrowDown':
+      },
+      'ArrowDown': () => {
         newView.setDate(view.getDate() + 7);
-        break;
-      case 'PageUp':
+      },
+      'PageUp': () => {
         if (e.shiftKey) {
           newView.setFullYear(view.getFullYear() - 1);
         } else {
           newView = getPrevMonthDate(view);
         }
-        break;
-      case 'PageDown':
+      },
+      'PageDown': () => {
         if (e.shiftKey) {
           newView.setFullYear(view.getFullYear() + 1);
         } else {
           newView = getNextMonthDate(view);
         }
-        break;
-      case 'Home':
+      },
+      'Home': () => {
         newView = getFirstDayOfWeek(view, firstDayOfWeek);
-        break;
-      case 'End':
+      },
+      'End': () => {
         newView = getLastDayOfWeek(view, firstDayOfWeek);
-        break;
+      },
+    };
+
+    if (Object.keys(keyActions).includes(e.key)) {
+      e.preventDefault();
+    } else {
+      return;
     }
+
+    keyActions[e.key]?.();
 
     setView(newView);
 
