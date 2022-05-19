@@ -75,7 +75,7 @@ const Daypicker = ({
       document.removeEventListener('keyup', focusTrap);
       document.removeEventListener('keyup', closeOnEsc);
     };
-  }, []);
+  }, [isDialogOpen, closeButtonRef.current, yearSelectRef.current, focusedElement.current]);
 
   useEffect(() => {
     const closeOnClickOutside = (e) => {
@@ -86,7 +86,7 @@ const Daypicker = ({
     document.addEventListener('click', closeOnClickOutside);
 
     return () => document.removeEventListener('click', closeOnClickOutside);
-  }, []);
+  }, [isDialogOpen, dialogRef.current]);
 
   useLayoutEffect(() => {
     if (isDialogOpen) {
@@ -94,7 +94,7 @@ const Daypicker = ({
     } else {
       toggleButtonRef.current.focus();
     }
-  }, [isDialogOpen]);
+  }, [isDialogOpen, yearSelectRef.current, toggleButtonRef.current]);
 
   /**
    * Function to skip disabled dates and navigate to the closest enabled date in that month
