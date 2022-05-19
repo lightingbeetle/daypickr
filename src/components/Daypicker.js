@@ -36,6 +36,7 @@ const Daypicker = ({
   const [selected, setSelected] = useState(selectedDay ? new Date(selectedDay) : undefined);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  const inputRef = useRef();
   const focusedElement = useRef();
   const toggleButtonRef = useRef();
   const yearSelectRef = useRef();
@@ -90,11 +91,13 @@ const Daypicker = ({
 
   useLayoutEffect(() => {
     if (isDialogOpen) {
-      yearSelectRef.current.focus();
+      yearSelectRef.current.focus();      
+    } else if (document.activeElement === inputRef.current) {
+      return;
     } else {
       toggleButtonRef.current.focus();
     }
-  }, [isDialogOpen, yearSelectRef.current, toggleButtonRef.current]);
+  }, [isDialogOpen, yearSelectRef.current, toggleButtonRef.current, inputRef.current]);
 
   // https://www.w3.org/TR/wai-aria-practices/examples/dialog-modal/datepicker-dialog.html#kbd_label_5
   const handleKeyboardNavigation = (e) => {
