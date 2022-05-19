@@ -5,9 +5,10 @@ import { render, screen } from '@testing-library/preact';
 import Daypicker from '../components/Daypicker';
 
 export function renderExample(props = {}) {
-  const { container } = render(html`<${Daypicker} id="example" ...${props} />`);
+  const { container } = render(html`<${Daypicker} id="example" test-id="example" ...${props} />`);
 
   return {
+    input: screen.getByTestId('example'),
     valueInput: screen.getByTestId('example-value'),
     dialog: screen.getByRole('dialog', { hidden: true }),
     table: screen.getByRole('table', { hidden: true }),
