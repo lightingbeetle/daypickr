@@ -213,6 +213,17 @@ describe('keyboard navigation', () => {
       })
     })
   });
+
+  test('preserve focus on input clicked while dialog opened', async () => {
+    const { user, toggleButton, input } = renderExample();
+
+    await user.click(toggleButton);
+    await user.click(input);
+
+    await waitFor(() => {
+      expect(document.activeElement).toEqual(input);
+    })
+  })
 });
 
 // the following promise somehow ensures all user interactions finish on time.
