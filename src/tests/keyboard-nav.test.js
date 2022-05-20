@@ -6,23 +6,22 @@ import { dateToYYYYMMDD, getFirstDayOfWeek, getLastDayOfWeek, getMonth } from '.
 const randomNumber = Math.floor(Math.random() * 100);
 
 describe('keyboard navigation', () => {
-
   test(`'Enter' key sends a date to input value`, async () => {
     const { user, table, toggleButton, valueInput } = renderExample();
-    const todayButton = table.querySelector('[tabindex="0"]')
-    
+    const todayButton = table.querySelector('[tabindex="0"]');
+
     await user.click(toggleButton);
-    
+
     todayButton.focus();
     const today = new Date();
-    
+
     await user.keyboard('{Enter}');
 
     await finishInteractions();
 
     await waitFor(() => {
-      expect(valueInput).toHaveValue(dateToYYYYMMDD(today))
-    })
+      expect(valueInput).toHaveValue(dateToYYYYMMDD(today));
+    });
   });
 
   test(`arrow forward ${randomNumber} times`, async () => {
@@ -197,33 +196,22 @@ describe('keyboard navigation', () => {
       const { user, table, toggleButton, valueInput } = renderExample({
         disabledDayFn: (date) => today.getDay() === date.getDay(),
       });
-      
+
       const todayButton = table.querySelector(`[tabindex="0"]`);
-      
+
       await user.click(toggleButton);
       todayButton.focus();
-      
-      await finishInteractions()
 
-      await user.keyboard("{Enter}")
+      await finishInteractions();
+
+      await user.keyboard('{Enter}');
 
       expect(todayButton).toHaveAttribute('aria-disabled');
-      await waitFor(() => {        
+      await waitFor(() => {
         expect(valueInput).toHaveValue('');
-      })
-    })
+      });
+    });
   });
-
-  test('preserve focus on input clicked while dialog opened', async () => {
-    const { user, toggleButton, input } = renderExample();
-
-    await user.click(toggleButton);
-    await user.click(input);
-
-    await waitFor(() => {
-      expect(document.activeElement).toEqual(input);
-    })
-  })
 });
 
 // the following promise somehow ensures all user interactions finish on time.
@@ -241,6 +229,6 @@ async function focusAndSelectDate(key, { table, user, toggleButton }) {
   await user.click(toggleButton);
   todayButton.focus();
   await user.keyboard(key);
-  await finishInteractions()
+  await finishInteractions();
   await user.keyboard('{Enter}');
 }

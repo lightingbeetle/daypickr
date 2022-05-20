@@ -63,4 +63,15 @@ describe('toggle', () => {
     await waitFor(() => expect(dialog).not.toBeVisible());
     await waitFor(() => expect(toggleButton.getAttribute('aria-expanded')).toBe('false'));
   });
+
+  test('keep input focus if clicked outside of opened dialog but on input', async () => {
+    const { user, toggleButton, input } = renderExample();
+
+    await user.click(toggleButton);
+    await user.click(input);
+
+    await waitFor(() => {
+      expect(document.activeElement).toEqual(input);
+    });
+  });
 });
