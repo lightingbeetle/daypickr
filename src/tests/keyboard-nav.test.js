@@ -1,7 +1,6 @@
-import { waitFor } from '@testing-library/preact';
-
-import { renderExample } from './utils';
+import { finishInteractions, renderExample } from './utils';
 import { dateToYYYYMMDD, getFirstDayOfWeek, getLastDayOfWeek, getMonth } from '../utils/date';
+import classNames from '../utils/classNames';
 
 const randomNumber = Math.floor(Math.random() * 100);
 
@@ -19,9 +18,7 @@ describe('keyboard navigation', () => {
 
     await finishInteractions();
 
-    await waitFor(() => {
-      expect(valueInput).toHaveValue(dateToYYYYMMDD(today));
-    });
+    expect(valueInput).toHaveValue(dateToYYYYMMDD(today));
   });
 
   test(`arrow forward ${randomNumber} times`, async () => {
@@ -46,9 +43,7 @@ describe('keyboard navigation', () => {
 
     await user.keyboard('{Enter}');
 
-    await waitFor(() => {
-      expect(valueInput).toHaveValue(dateToYYYYMMDD(newDate));
-    });
+    expect(valueInput).toHaveValue(dateToYYYYMMDD(newDate));
   });
 
   test(`arrow backward ${randomNumber} times`, async () => {
@@ -73,9 +68,7 @@ describe('keyboard navigation', () => {
 
     await user.keyboard('{Enter}');
 
-    await waitFor(() => {
-      expect(valueInput).toHaveValue(dateToYYYYMMDD(newDate));
-    });
+    expect(valueInput).toHaveValue(dateToYYYYMMDD(newDate));
   });
 
   test(`'PageUp' key navigates to last month and same day`, async () => {
@@ -86,9 +79,7 @@ describe('keyboard navigation', () => {
     const lastMonthDate = getMonth(today, today.getMonth() - 1);
     await focusAndSelectDate('{PageUp}', example);
 
-    await waitFor(() => {
-      expect(valueInput).toHaveValue(dateToYYYYMMDD(lastMonthDate));
-    });
+    expect(valueInput).toHaveValue(dateToYYYYMMDD(lastMonthDate));
   });
 
   test(`'PageUp' + 'Shift' key navigates to last year and same day`, async () => {
@@ -100,9 +91,7 @@ describe('keyboard navigation', () => {
     newDate.setFullYear(today.getFullYear() - 1);
     await focusAndSelectDate('{Shift>}{PageUp}{/Shift}', example);
 
-    await waitFor(() => {
-      expect(valueInput).toHaveValue(dateToYYYYMMDD(newDate));
-    });
+    expect(valueInput).toHaveValue(dateToYYYYMMDD(newDate));
   });
 
   test(`'PageDown' key navigates to next month and same day`, async () => {
@@ -113,9 +102,7 @@ describe('keyboard navigation', () => {
     const nextMonthDate = getMonth(today, today.getMonth() + 1);
     await focusAndSelectDate('{PageDown}', example);
 
-    await waitFor(() => {
-      expect(valueInput).toHaveValue(dateToYYYYMMDD(nextMonthDate));
-    });
+    expect(valueInput).toHaveValue(dateToYYYYMMDD(nextMonthDate));
   });
 
   test(`'PageDown' + 'Shift' key navigates to next year and same day`, async () => {
@@ -127,9 +114,7 @@ describe('keyboard navigation', () => {
     newDate.setFullYear(today.getFullYear() + 1);
     await focusAndSelectDate('{Shift>}{PageDown}{/Shift}', example);
 
-    await waitFor(() => {
-      expect(valueInput).toHaveValue(dateToYYYYMMDD(newDate));
-    });
+    expect(valueInput).toHaveValue(dateToYYYYMMDD(newDate));
   });
 
   describe('Monday is first day of the week', () => {
@@ -142,9 +127,7 @@ describe('keyboard navigation', () => {
       const firstDayOfWeekDate = getFirstDayOfWeek(new Date(), firstDayOfWeek);
       await focusAndSelectDate('{Home}', example);
 
-      await waitFor(() => {
-        expect(valueInput).toHaveValue(dateToYYYYMMDD(firstDayOfWeekDate));
-      });
+      expect(valueInput).toHaveValue(dateToYYYYMMDD(firstDayOfWeekDate));
     });
 
     test(`'End' key navigates to last day of the week`, async () => {
@@ -154,9 +137,7 @@ describe('keyboard navigation', () => {
       const lastDayOfWeekDate = getLastDayOfWeek(new Date(), firstDayOfWeek);
       await focusAndSelectDate('{End}', example);
 
-      await waitFor(() => {
-        expect(valueInput).toHaveValue(dateToYYYYMMDD(lastDayOfWeekDate));
-      });
+      expect(valueInput).toHaveValue(dateToYYYYMMDD(lastDayOfWeekDate));
     });
   });
 
@@ -170,9 +151,7 @@ describe('keyboard navigation', () => {
       const firstDayOfWeekDate = getFirstDayOfWeek(new Date(), firstDayOfWeek);
       await focusAndSelectDate('{Home}', example);
 
-      await waitFor(() => {
-        expect(valueInput).toHaveValue(dateToYYYYMMDD(firstDayOfWeekDate));
-      });
+      expect(valueInput).toHaveValue(dateToYYYYMMDD(firstDayOfWeekDate));
     });
 
     test(`'End' key navigates to last day of the week`, async () => {
@@ -182,9 +161,7 @@ describe('keyboard navigation', () => {
       const lastDayOfWeekDate = getLastDayOfWeek(new Date(), firstDayOfWeek);
       await focusAndSelectDate('{End}', example);
 
-      await waitFor(() => {
-        expect(valueInput).toHaveValue(dateToYYYYMMDD(lastDayOfWeekDate));
-      });
+      expect(valueInput).toHaveValue(dateToYYYYMMDD(lastDayOfWeekDate));
     });
   });
 
@@ -207,21 +184,10 @@ describe('keyboard navigation', () => {
       await user.keyboard('{Enter}');
 
       expect(todayButton).toHaveAttribute('aria-disabled');
-      await waitFor(() => {
-        expect(valueInput).toHaveValue('');
-      });
+      expect(valueInput).toHaveValue('');
     });
   });
 });
-
-// the following promise somehow ensures all user interactions finish on time.
-async function finishInteractions() {
-  await new Promise((res) => {
-    setTimeout(() => {
-      res(), 0;
-    });
-  });
-}
 
 async function focusAndSelectDate(key, { table, user, toggleButton }) {
   const todayButton = table.querySelector(`[tabindex="0"]`);
