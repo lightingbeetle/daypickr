@@ -17,3 +17,12 @@ export function renderExample(props = {}) {
     container,
   };
 }
+
+// the following promise somehow ensures all user interactions finish on time.
+export async function finishInteractions() {
+  await new Promise((res) => {
+    setTimeout(() => {
+      res(), 0;
+    });
+  });
+}
