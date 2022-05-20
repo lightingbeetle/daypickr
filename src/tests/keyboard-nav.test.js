@@ -187,6 +187,25 @@ describe('keyboard navigation', () => {
       expect(valueInput).toHaveValue('');
     });
   });
+
+  describe('Focus trap', () => {
+    test('focus not leaving opened dialog', async () => {
+      expect.assertions(3);
+      const { user, container, toggleButton } = renderExample();
+      const yearSelect = container.querySelector(`.${classNames.yearSelect}`);
+      const closeButton = container.querySelector(`.${classNames.closeButton}`);
+
+      await user.click(toggleButton);
+
+      expect(document.activeElement).toEqual(yearSelect);
+      await user.keyboard('{Shift>}{Tab}{/Shift}');
+
+      expect(document.activeElement).toEqual(closeButton);
+      await user.keyboard('{Tab}');
+
+      expect(document.activeElement).toEqual(yearSelect);
+    });
+  });
 });
 
 async function focusAndSelectDate(key, { table, user, toggleButton }) {
