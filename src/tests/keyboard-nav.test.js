@@ -1,7 +1,8 @@
 import { waitFor } from '@testing-library/preact';
 
-import { renderExample } from './utils';
+import { renderExample, finishInteractions } from './utils';
 import { dateToYYYYMMDD, getFirstDayOfWeek, getLastDayOfWeek, getMonth } from '../utils/date';
+import classNames from '../utils/classNames';
 
 const randomNumber = Math.floor(Math.random() * 100);
 
