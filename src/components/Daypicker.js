@@ -3,7 +3,7 @@ import { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'preac
 
 import classNames from '../utils/classNames';
 import l10n from '../utils/l10n';
-import { getMonth, dateToYYYYMMDD, arrangeWeekdays, getDaysInMonth } from '../utils/date';
+import { getMonth, dateToYYYYMMDD, getLastDayOfWeek, getFirstDayOfWeek } from '../utils/date';
 import Context from './Context';
 
 import Calendar from './Calendar';
@@ -36,6 +36,7 @@ const Daypicker = ({
   const [selected, setSelected] = useState(selectedDay ? new Date(selectedDay) : undefined);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  const inputRef = useRef();
   const focusedElement = useRef();
   const toggleButtonRef = useRef();
   const yearSelectRef = useRef();
@@ -57,7 +58,7 @@ const Daypicker = ({
 
         if (e.shiftKey && document.activeElement === yearSelectRef.current) {
           e.preventDefault();
-          focusedElement.current.focus();
+          closeButtonRef.current.focus();
         }
       }
     };
@@ -68,14 +69,14 @@ const Daypicker = ({
       }
     };
 
-    document.addEventListener('keyup', focusTrap);
-    document.addEventListener('keyup', closeOnEsc);
+    document.addEventListener('keydown', focusTrap);
+    document.addEventListener('keydown', closeOnEsc);
 
     return () => {
-      document.removeEventListener('keyup', focusTrap);
-      document.removeEventListener('keyup', closeOnEsc);
+      document.removeEventListener('keydown', focusTrap);
+      document.removeEventListener('keydown', closeOnEsc);
     };
-  }, [isDialogOpen, closeButtonRef.current, yearSelectRef.current, focusedElement.current]);
+  }, [isDialogOpen, closeButtonRef.current, yearSelectRef.current]);
 
   useEffect(() => {
     const closeOnClickOutside = (e) => {
@@ -90,103 +91,60 @@ const Daypicker = ({
 
   useLayoutEffect(() => {
     if (isDialogOpen) {
-      yearSelectRef.current.focus();
+      yearSelectRef.current.focus();      
+    } else if (document.activeElement === inputRef.current) {
+      return;
     } else {
       toggleButtonRef.current.focus();
     }
-  }, [isDialogOpen, yearSelectRef.current, toggleButtonRef.current]);
-
-  /**
-   * Function to skip disabled dates and navigate to the closest enabled date in that month
-   * @param {Date} view Selected calendar date value
-   * @param {number} step Step amount to search for closest enabled date
-   */
-  const setClosestAvailableDateInMonth = useCallback(
-    (view, step = 1) => {
-      const isDisabled = disabledDayFn?.(view) ?? false;
-      if (!isDisabled) return;
-
-      const viewDate = view.getDate();
-      const viewMonth = view.getMonth();
-      const viewYear = view.getFullYear();
-
-      const monthDays = getDaysInMonth(viewMonth, viewYear);
-      const isFirstDayOfMonth = viewDate === 1;
-      const isLastDayOfMonth = viewDate === monthDays;
-      // switch search direction if start or end of the month
-      if ((isFirstDayOfMonth && step === -1) || (isLastDayOfMonth && step === 1)) {
-        step *= -1;
-      }
-
-      view.setDate(viewDate + step);
-      setClosestAvailableDateInMonth(view, step);
-    },
-    [disabledDayFn]
-  );
+  }, [isDialogOpen, yearSelectRef.current, toggleButtonRef.current, inputRef.current]);
 
   // https://www.w3.org/TR/wai-aria-practices/examples/dialog-modal/datepicker-dialog.html#kbd_label_5
   const handleKeyboardNavigation = (e) => {
-    const navigationKeys = [
-      'ArrowLeft',
-      'ArrowRight',
-      'ArrowUp',
-      'ArrowDown',
-      'PageUp',
-      'PageDown',
-      'Home',
-      'End',
-    ];
-    if (navigationKeys.includes(e.key)) {
-      e.preventDefault();
-    } else {
-      return;
-    }
-
     let newView = new Date(view);
-
-    const weekdaysSorted = arrangeWeekdays([0, 1, 2, 3, 4, 5, 6], firstDayOfWeek);
-
-    const getFirstWeekdayDiff = (day) => weekdaysSorted.indexOf(day);
-    const getLastWeekdayDiff = (day) => weekdaysSorted.reverse().indexOf(day);
-
-    switch (e.key) {
-      case 'ArrowLeft':
+    
+    const keyActions = {
+      'ArrowLeft': () => {
         newView.setDate(view.getDate() - 1);
-        break;
-      case 'ArrowRight':
+      },
+      'ArrowRight': () => {
         newView.setDate(view.getDate() + 1);
-        break;
-      case 'ArrowUp':
+      },
+      'ArrowUp': () => {
         newView.setDate(view.getDate() - 7);
-        break;
-      case 'ArrowDown':
+      },
+      'ArrowDown': () => {
         newView.setDate(view.getDate() + 7);
-        break;
-      case 'PageUp':
+      },
+      'PageUp': () => {
         if (e.shiftKey) {
           newView.setFullYear(view.getFullYear() - 1);
         } else {
           newView = getPrevMonthDate(view);
         }
-        setClosestAvailableDateInMonth(newView, -1);
-        break;
-      case 'PageDown':
+      },
+      'PageDown': () => {
         if (e.shiftKey) {
           newView.setFullYear(view.getFullYear() + 1);
         } else {
           newView = getNextMonthDate(view);
         }
-        setClosestAvailableDateInMonth(newView, 1);
-        break;
-      case 'Home':
-        newView.setDate(view.getDate() - getFirstWeekdayDiff(view.getDay()));
-        setClosestAvailableDateInMonth(newView, 1);
-        break;
-      case 'End':
-        newView.setDate(view.getDate() + getLastWeekdayDiff(view.getDay()));
-        setClosestAvailableDateInMonth(newView, -1);
-        break;
+      },
+      'Home': () => {
+        newView = getFirstDayOfWeek(view, firstDayOfWeek);
+      },
+      'End': () => {
+        newView = getLastDayOfWeek(view, firstDayOfWeek);
+      },
+    };
+
+    if (Object.keys(keyActions).includes(e.key)) {
+      e.preventDefault();
+    } else {
+      return;
     }
+
+    keyActions[e.key]?.();
 
     setView(newView);
 
@@ -195,16 +153,12 @@ const Daypicker = ({
     }, 0);
   };
 
-  const getRelativeMonthDate = (view, step) => {
-    return getMonth(view, view.getMonth() + step);
-  };
-
   const getPrevMonthDate = (view) => {
-    return getRelativeMonthDate(view, -1);
+    return getMonth(view, view.getMonth() - 1);
   };
 
   const getNextMonthDate = (view) => {
-    return getRelativeMonthDate(view, 1);
+    return getMonth(view, view.getMonth() + 1)
   };
 
   const prevMonth = () => {
@@ -255,6 +209,7 @@ const Daypicker = ({
         class=${classes.input}
         value=${selected && selected.toLocaleDateString(locale)}
         onChange=${(e) => onInputChange(e)}
+        ref=${inputRef}
       />
       <input type="hidden" id=${`${id}-value`} value=${formatDate(selected)} name=${name} />
       <button

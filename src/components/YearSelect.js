@@ -30,7 +30,7 @@ const YearSelect = forwardRef((props, ref) => {
       setView(newView);
     }}
     ref=${ref}
-    {...props}
+    ...${props}
   />`;
 });
 

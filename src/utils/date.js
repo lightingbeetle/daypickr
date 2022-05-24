@@ -16,7 +16,7 @@ function getRange(startDate, endDate) {
   return days;
 }
 
-function getFirstDayOfWeek(date, firstDayOfWeek) {
+export function getFirstDayOfWeek(date, firstDayOfWeek = 1) {
   const d = new Date(date);
   const day = date.getDay();
   const diff = (day < firstDayOfWeek ? 7 : 0) + day - firstDayOfWeek;
@@ -26,16 +26,12 @@ function getFirstDayOfWeek(date, firstDayOfWeek) {
   return result;
 }
 
-function getLastDayOfWeek(date, firstDayOfWeek) {
+export function getLastDayOfWeek(date, firstDayOfWeek = 1) {
   const d = new Date(date);
   const day = d.getDay();
   const diff = (day < firstDayOfWeek ? -7 : 0) + 6 - (day - firstDayOfWeek);
 
   return new Date(d.setDate(d.getDate() + diff));
-}
-
-export function getDaysInMonth(month, year) {
-  return new Date(year, month + 1, 0).getDate();
 }
 
 export function getMonthView(view, firstDayOfWeek) {
