@@ -3,7 +3,6 @@ import { useState, useRef, useEffect, useLayoutEffect } from 'preact/hooks';
 
 import classNames from '../utils/classNames';
 import l10n from '../utils/l10n';
-import keyCodes, { arrowKeys } from '../utils/keyCodes';
 import { getMonth, dateToYYYYMMDD } from '../utils/date';
 import Context from './Context';
 
@@ -69,14 +68,14 @@ const Daypicker = ({
       }
     };
 
-    document.addEventListener('keydown', focusTrap);
-    document.addEventListener('keydown', closeOnEsc);
+    document.addEventListener('keyup', focusTrap);
+    document.addEventListener('keyup', closeOnEsc);
 
     return () => {
-      document.removeEventListener('keydown', focusTrap);
-      document.removeEventListener('keydown', closeOnEsc);
+      document.removeEventListener('keyup', focusTrap);
+      document.removeEventListener('keyup', closeOnEsc);
     };
-  }, []);
+  }, [isDialogOpen, closeButtonRef.current, yearSelectRef.current, focusedElement.current]);
 
   useEffect(() => {
     const closeOnClickOutside = (e) => {
@@ -87,7 +86,7 @@ const Daypicker = ({
     document.addEventListener('click', closeOnClickOutside);
 
     return () => document.removeEventListener('click', closeOnClickOutside);
-  }, []);
+  }, [isDialogOpen, dialogRef.current]);
 
   useLayoutEffect(() => {
     if (isDialogOpen) {
@@ -95,10 +94,10 @@ const Daypicker = ({
     } else {
       toggleButtonRef.current.focus();
     }
-  }, [isDialogOpen]);
+  }, [isDialogOpen, yearSelectRef.current, toggleButtonRef.current]);
 
   const handleKeyboardNavigation = (e) => {
-    if (arrowKeys.includes(e.which)) {
+    if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
       e.preventDefault();
     } else {
       return;
@@ -106,17 +105,17 @@ const Daypicker = ({
 
     const newView = new Date(view);
 
-    switch (e.which) {
-      case keyCodes.ARROWLEFT:
+    switch (e.key) {
+      case 'ArrowLeft':
         newView.setDate(view.getDate() - 1);
         break;
-      case keyCodes.ARROWRIGHT:
+      case 'ArrowRight':
         newView.setDate(view.getDate() + 1);
         break;
-      case keyCodes.ARROWUP:
+      case 'ArrowUp':
         newView.setDate(view.getDate() - 7);
         break;
-      case keyCodes.ARROWDOWN:
+      case 'ArrowDown':
         newView.setDate(view.getDate() + 7);
         break;
     }
@@ -177,7 +176,7 @@ const Daypicker = ({
         value=${selected && selected.toLocaleDateString(locale)}
         onChange=${(e) => onInputChange(e)}
       />
-      <input type="hidden" value=${formatDate(selected)} name=${name} />
+      <input type="hidden" id=${`${id}-value`} value=${formatDate(selected)} name=${name} />
       <button
         type="button"
         aria-controls="${id}-dialog"
