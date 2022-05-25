@@ -1,9 +1,9 @@
 import { html } from 'htm/preact';
-import { useState, useRef, useEffect, useLayoutEffect } from 'preact/hooks';
+import { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'preact/hooks';
 
 import classNames from '../utils/classNames';
 import l10n from '../utils/l10n';
-import { getMonth, dateToYYYYMMDD } from '../utils/date';
+import { getMonth, dateToYYYYMMDD, getLastDayOfWeek, getFirstDayOfWeek } from '../utils/date';
 import Context from './Context';
 
 import Calendar from './Calendar';
@@ -36,6 +36,7 @@ const Daypicker = ({
   const [selected, setSelected] = useState(selectedDay ? new Date(selectedDay) : undefined);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  const inputRef = useRef();
   const focusedElement = useRef();
   const toggleButtonRef = useRef();
   const yearSelectRef = useRef();
@@ -57,7 +58,7 @@ const Daypicker = ({
 
         if (e.shiftKey && document.activeElement === yearSelectRef.current) {
           e.preventDefault();
-          focusedElement.current.focus();
+          closeButtonRef.current.focus();
         }
       }
     };
@@ -68,14 +69,14 @@ const Daypicker = ({
       }
     };
 
-    document.addEventListener('keyup', focusTrap);
-    document.addEventListener('keyup', closeOnEsc);
+    document.addEventListener('keydown', focusTrap);
+    document.addEventListener('keydown', closeOnEsc);
 
     return () => {
-      document.removeEventListener('keyup', focusTrap);
-      document.removeEventListener('keyup', closeOnEsc);
+      document.removeEventListener('keydown', focusTrap);
+      document.removeEventListener('keydown', closeOnEsc);
     };
-  }, [isDialogOpen, closeButtonRef.current, yearSelectRef.current, focusedElement.current]);
+  }, [isDialogOpen, closeButtonRef.current, yearSelectRef.current]);
 
   useEffect(() => {
     const closeOnClickOutside = (e) => {
@@ -90,35 +91,60 @@ const Daypicker = ({
 
   useLayoutEffect(() => {
     if (isDialogOpen) {
-      yearSelectRef.current.focus();
+      yearSelectRef.current.focus();      
+    } else if (document.activeElement === inputRef.current) {
+      return;
     } else {
       toggleButtonRef.current.focus();
     }
-  }, [isDialogOpen, yearSelectRef.current, toggleButtonRef.current]);
+  }, [isDialogOpen, yearSelectRef.current, toggleButtonRef.current, inputRef.current]);
 
+  // https://www.w3.org/TR/wai-aria-practices/examples/dialog-modal/datepicker-dialog.html#kbd_label_5
   const handleKeyboardNavigation = (e) => {
-    if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
+    let newView = new Date(view);
+    
+    const keyActions = {
+      'ArrowLeft': () => {
+        newView.setDate(view.getDate() - 1);
+      },
+      'ArrowRight': () => {
+        newView.setDate(view.getDate() + 1);
+      },
+      'ArrowUp': () => {
+        newView.setDate(view.getDate() - 7);
+      },
+      'ArrowDown': () => {
+        newView.setDate(view.getDate() + 7);
+      },
+      'PageUp': () => {
+        if (e.shiftKey) {
+          newView.setFullYear(view.getFullYear() - 1);
+        } else {
+          newView = getPrevMonthDate(view);
+        }
+      },
+      'PageDown': () => {
+        if (e.shiftKey) {
+          newView.setFullYear(view.getFullYear() + 1);
+        } else {
+          newView = getNextMonthDate(view);
+        }
+      },
+      'Home': () => {
+        newView = getFirstDayOfWeek(view, firstDayOfWeek);
+      },
+      'End': () => {
+        newView = getLastDayOfWeek(view, firstDayOfWeek);
+      },
+    };
+
+    if (Object.keys(keyActions).includes(e.key)) {
       e.preventDefault();
     } else {
       return;
     }
 
-    const newView = new Date(view);
-
-    switch (e.key) {
-      case 'ArrowLeft':
-        newView.setDate(view.getDate() - 1);
-        break;
-      case 'ArrowRight':
-        newView.setDate(view.getDate() + 1);
-        break;
-      case 'ArrowUp':
-        newView.setDate(view.getDate() - 7);
-        break;
-      case 'ArrowDown':
-        newView.setDate(view.getDate() + 7);
-        break;
-    }
+    keyActions[e.key]?.();
 
     setView(newView);
 
@@ -127,12 +153,20 @@ const Daypicker = ({
     }, 0);
   };
 
+  const getPrevMonthDate = (view) => {
+    return getMonth(view, view.getMonth() - 1);
+  };
+
+  const getNextMonthDate = (view) => {
+    return getMonth(view, view.getMonth() + 1)
+  };
+
   const prevMonth = () => {
-    setView(getMonth(view, view.getMonth() - 1));
+    setView(getPrevMonthDate(view));
   };
 
   const nextMonth = () => {
-    setView(getMonth(view, view.getMonth() + 1));
+    setView(getNextMonthDate(view));
   };
 
   const toggleDialog = () => {
@@ -175,6 +209,7 @@ const Daypicker = ({
         class=${classes.input}
         value=${selected && selected.toLocaleDateString(locale)}
         onChange=${(e) => onInputChange(e)}
+        ref=${inputRef}
       />
       <input type="hidden" id=${`${id}-value`} value=${formatDate(selected)} name=${name} />
       <button
