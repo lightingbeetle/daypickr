@@ -90,7 +90,7 @@ export function isDayInCurrentMonth(day, view) {
 }
 
 export function dateToYYYYMMDD(date) {
-  if (!date || !date instanceof Date) {
+  if (!date || !(date instanceof Date)) {
     return '';
   }
 

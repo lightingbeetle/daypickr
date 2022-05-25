@@ -1,6 +1,5 @@
 import { useContext } from 'preact/hooks';
 import { forwardRef } from 'preact/compat';
-import { html } from 'htm/preact';
 
 import Context from './Context';
 import Select from './Select';
@@ -19,19 +18,21 @@ const YearSelect = forwardRef((props, ref) => {
   const startYear = new Date(min).getFullYear();
   const endYear = new Date(max).getFullYear();
 
-  return html`<${Select}
-    label=${l10n.year}
-    options=${populateYears(startYear, endYear)}
-    value=${view.getFullYear()}
-    className=${classes.yearSelect}
-    onChange=${(e) => {
-      const newView = new Date(view);
-      newView.setFullYear(parseInt(e.target.value, 10));
-      setView(newView);
-    }}
-    ref=${ref}
-    ...${props}
-  />`;
+  return (
+    <Select
+      label={l10n.year}
+      options={populateYears(startYear, endYear)}
+      value={view.getFullYear()}
+      className={classes.yearSelect}
+      onChange={(e) => {
+        const newView = new Date(view);
+        newView.setFullYear(parseInt(e.target.value, 10));
+        setView(newView);
+      }}
+      ref={ref}
+      {...props}
+    />
+  );
 });
 
 export default YearSelect;

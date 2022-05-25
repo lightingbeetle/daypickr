@@ -1,5 +1,4 @@
 import { useContext } from 'preact/hooks';
-import { html } from 'htm/preact';
 import {
   getMonthView,
   splitToWeeks,
@@ -30,66 +29,62 @@ const Calendar = () => {
   const monthView = getMonthView(view, firstDayOfWeek);
   const weeks = splitToWeeks(monthView);
 
-  return html`
-    <table class="${classes.table}">
+  return (
+    <table className={classes.table}>
       <thead>
-        <tr class="${classes.tableHeaderRow}">
-          ${weekdays.map(
-            (day) => html`
-              <th scope="col" class="${classes.tableHeaderCell}">
-                <span class="${classes.srOnly}">${day.name}</span>
-                <span aria-hidden="true">${day.shortname}</span>
-              </th>
-            `
-          )}
+        <tr className={classes.tableHeaderRow}>
+          {weekdays.map((day) => (
+            <th scope="col" className="{classes.tableHeaderCell}">
+              <span className={classes.srOnly}>{day.name}</span>
+              <span aria-hidden="true">{day.shortname}</span>
+            </th>
+          ))}
         </tr>
       </thead>
       <tbody>
-        ${weeks.map(
-          (week) => html`
-            <tr class="${classes.tableRow}">
-              ${week.map((day) => {
-                const isSelected = selected && datesAreEqual(day, selected);
-                const isFocused = datesAreEqual(day, view);
-                const isDisabled = !isDayInCurrentMonth(day, view) || disabledDayFn(day);
-                const todayClass = isToday(day) ? classes.isToday : undefined;
-                const selectedClass = isSelected ? classes.isSelected : undefined;
+        {weeks.map((week) => (
+          <tr className={classes.tableRow}>
+            {week.map((day) => {
+              const isSelected = selected && datesAreEqual(day, selected);
+              const isFocused = datesAreEqual(day, view);
+              const isDisabled = !isDayInCurrentMonth(day, view) || disabledDayFn(day);
+              const todayClass = isToday(day) ? classes.isToday : undefined;
+              const selectedClass = isSelected ? classes.isSelected : undefined;
 
-                const buttonClasses = [classes.dayButton, todayClass, selectedClass];
-                const buttonTabIndex = isFocused ? '0' : '-1';
-                const localeDateString = day.toLocaleDateString(locale);
-                const ref = isFocused ? focusedRef : undefined;
+              const buttonClasses = [classes.dayButton, todayClass, selectedClass];
+              const buttonTabIndex = isFocused ? '0' : '-1';
+              const localeDateString = day.toLocaleDateString(locale);
+              const ref = isFocused ? focusedRef : undefined;
 
-                return html`
-                  <td role="gridcell" class="${classes.tableCell}">
-                    <button
-                      class="${buttonClasses.join(' ')}"
-                      type="button"
-                      onClick=${() => {
-                        if (!isDisabled) {
-                          setSelected(day);
-                          setView(day);
-                        }
-                      }}
-                      tabindex=${buttonTabIndex}
-                      onKeyUp=${handleKeyboardNavigation}
-                      ref=${ref}
-                      aria-disabled=${isDisabled}
-                      aria-label=${localeDateString}
-                      aria-selected=${isSelected}
-                    >
-                      <span class="${classes.srOnly}">${localeDateString}</span>
-                      <span aria-hidden="true">${day.getDate()}</span>
-                    </button>
-                  </td>
-                `;
-              })}
-            </tr>
-          `
-        )}
+              return (
+                <td role="gridcell" className={classes.tableCell}>
+                  <button
+                    className={buttonClasses.join(' ')}
+                    type="button"
+                    onClick={() => {
+                      if (!isDisabled) {
+                        setSelected(day);
+                        setView(day);
+                      }
+                    }}
+                    tabindex={buttonTabIndex}
+                    onKeyUp={handleKeyboardNavigation}
+                    ref={ref}
+                    aria-disabled={isDisabled}
+                    aria-label={localeDateString}
+                    aria-selected={isSelected}
+                  >
+                    <span className={classes.srOnly}>{localeDateString}</span>
+                    <span aria-hidden="true">{day.getDate()}</span>
+                  </button>
+                </td>
+              );
+            })}
+          </tr>
+        ))}
       </tbody>
     </table>
-  `;
+  );
 };
 
 export default Calendar;

@@ -33,19 +33,17 @@
     }
   </style>
   <main>
-  <h1>Daypicker</h1>
-  <div id="daypicker" data-daypicker></div>
+    <h1>Daypicker</h1>
+    <div id="daypicker" data-daypicker></div>
   </main>
-  <div id="root-daypickers"></div> 
-  <script src='daypicker.js'></script>
+  <script src='daypicker.min.js'></script>
   <script>
     window.addEventListener('DOMContentLoaded', () => {
       const daypickers = Array.from(document.querySelectorAll('[data-daypicker]'));
+      console.log(dayPicker);
 
       daypickers.map((element) => {
-        dayPicker(element, {
-          disabledDayFn: (date) => [6, 0].includes(date.getDay()),
-        });
+        dayPicker(element);
       });
     })
   </script>
