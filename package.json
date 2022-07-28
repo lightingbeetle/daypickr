@@ -17,6 +17,9 @@
     "datepicker"
   ],
   "author": "Juraj Kiss",
+  "contributors": [
+    "Dušan Tužinský"
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/lightingbeetle/daypickr/issues"
