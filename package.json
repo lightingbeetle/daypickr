@@ -3,11 +3,15 @@
   "version": "0.0.1",
   "description": "An accessible, interactive widget for selecting a day which populates an input field with a date.",
   "main": "public/daypickr.js",
+  "files": [
+    "public/*"
+  ],
   "type": "module",
   "scripts": {
     "build": "rollup -c",
     "start": "rollup -c -w",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
