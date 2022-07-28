@@ -10,7 +10,7 @@ import Calendar from './Calendar';
 import YearSelect from './YearSelect';
 import MonthSelect from './MonthSelect';
 
-const Daypicker = ({
+const Daypickr = ({
   min = '1900-01-01',
   max = '2100-12-31',
   classes = classNames,
@@ -91,7 +91,7 @@ const Daypicker = ({
 
   useLayoutEffect(() => {
     if (isDialogOpen) {
-      yearSelectRef.current.focus();      
+      yearSelectRef.current.focus();
     } else if (document.activeElement === inputRef.current) {
       return;
     } else {
@@ -102,38 +102,38 @@ const Daypicker = ({
   // https://www.w3.org/TR/wai-aria-practices/examples/dialog-modal/datepicker-dialog.html#kbd_label_5
   const handleKeyboardNavigation = (e) => {
     let newView = new Date(view);
-    
+
     const keyActions = {
-      'ArrowLeft': () => {
+      ArrowLeft: () => {
         newView.setDate(view.getDate() - 1);
       },
-      'ArrowRight': () => {
+      ArrowRight: () => {
         newView.setDate(view.getDate() + 1);
       },
-      'ArrowUp': () => {
+      ArrowUp: () => {
         newView.setDate(view.getDate() - 7);
       },
-      'ArrowDown': () => {
+      ArrowDown: () => {
         newView.setDate(view.getDate() + 7);
       },
-      'PageUp': () => {
+      PageUp: () => {
         if (e.shiftKey) {
           newView.setFullYear(view.getFullYear() - 1);
         } else {
           newView = getPrevMonthDate(view);
         }
       },
-      'PageDown': () => {
+      PageDown: () => {
         if (e.shiftKey) {
           newView.setFullYear(view.getFullYear() + 1);
         } else {
           newView = getNextMonthDate(view);
         }
       },
-      'Home': () => {
+      Home: () => {
         newView = getFirstDayOfWeek(view, firstDayOfWeek);
       },
-      'End': () => {
+      End: () => {
         newView = getLastDayOfWeek(view, firstDayOfWeek);
       },
     };
@@ -158,7 +158,7 @@ const Daypicker = ({
   };
 
   const getNextMonthDate = (view) => {
-    return getMonth(view, view.getMonth() + 1)
+    return getMonth(view, view.getMonth() + 1);
   };
 
   const prevMonth = () => {
@@ -226,12 +226,12 @@ const Daypicker = ({
         class=${classes.wrapper}
         role="dialog"
         aria-modal="true"
-        aria-labelledby="daypicker-label"
+        aria-labelledby="daypickr-label"
         hidden=${!isDialogOpen}
         ref=${dialogRef}
       >
-        <div class="daypicker__content">
-          <h2 id="daypicker-label" class="sr-only">${view.getFullYear()} ${view.getMonth()}</h2>
+        <div class="daypickr__content">
+          <h2 id="daypickr-label" class="sr-only">${view.getFullYear()} ${view.getMonth()}</h2>
           <div class="${classes.header}">
             <div class="${classes.yearMonthWrapper}">
               <${YearSelect} ref=${yearSelectRef} />
@@ -270,4 +270,4 @@ const Daypicker = ({
   `;
 };
 
-export default Daypicker;
+export default Daypickr;

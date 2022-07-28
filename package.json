@@ -1,8 +1,8 @@
 {
-  "name": "daypicker",
+  "name": "daypickr",
   "version": "0.0.1",
   "description": "An accessible, interactive widget for selecting a day which populates an input field with a date.",
-  "main": "public/daypicker.js",
+  "main": "public/daypickr.js",
   "type": "module",
   "scripts": {
     "build": "rollup -c",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lightingbeetle/daypicker.git"
+    "url": "git+https://github.com/lightingbeetle/daypickr.git"
   },
   "keywords": [
     "datepicker"
@@ -19,9 +19,9 @@
   "author": "Juraj Kiss",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/lightingbeetle/daypicker/issues"
+    "url": "https://github.com/lightingbeetle/daypickr/issues"
   },
-  "homepage": "https://github.com/lightingbeetle/daypicker#readme",
+  "homepage": "https://github.com/lightingbeetle/daypickr#readme",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.1",
     "@rollup/plugin-node-resolve": "^7.0.0",

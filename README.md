@@ -1,20 +1,20 @@
-# Daypicker
+# Daypickr
 
 An accessible, interactive widget for selecting a day which populates an input field with a date.
 
 ## Use
 
 ```html
-<div id="my-dayPicker"></div>
+<div id="my-dayPickr"></div>
 ```
 
 ```javascript
-import dayPicker from 'daypicker';
+import dayPickr from 'daypickr';
 
-const myDaypicker = new dayPicker(document.getElementById('#my-dayPicker'), { ...options });
+const myDaypickr = new dayPickr(document.getElementById('#my-dayPickr'), { ...options });
 ```
 
-The dayPicker function renders two input elements - a user editable input field and a hidden field that is populated with the selected value. The user editable input should be formatted in natural language and is not set along with the form. The hidden input is populated with YYYY-MM-DD format, which can be customized.
+The dayPickr function renders two input elements - a user editable input field and a hidden field that is populated with the selected value. The user editable input should be formatted in natural language and is not set along with the form. The hidden input is populated with YYYY-MM-DD format, which can be customized.
 
 ## Options
 
@@ -23,28 +23,28 @@ The dayPicker function renders two input elements - a user editable input field 
   min = '1900-01-01', // minimum date
   max = '2100-12-31', // maximum date
   classes = {
-    wrapper: 'daypicker', // calendar dialog wrapper
-    header: 'daypicker__header', // calendar header with month and year navigation
-    select: 'daypicker__select', // all select elements
-    monthSelect: 'daypicker__select--month', // select for choosing calendar month
-    yearSelect: 'daypicker__select--year', // select for choosing calendar year
-    button: 'daypicker__button', // all buttons in calendar
-    paginationButton: 'daypicker__button--pagination', // next/prev pagination buttons
-    nextMonthButton: 'daypicker__button--pagination-next', // next month pagination button
-    prevMonthButton: 'daypicker__button--pagination-prev', // previous month pagination button
-    yearMonthWrapper: 'daypicker__year-month-wrapper', // wrapper for year and month selects
-    pagination: 'daypicker__pagination', // wrapper for prev/next buttons
-    table: 'daypicker__calendar', // calendar table
-    tableRow: 'daypicker__calendar-row', // calendar table row
-    tableCell: 'daypicker__calendar-cell', // calendar table cell
-    tableHeaderRow: 'daypicker__calendar-header-row', // calendar table header row with weekdays
-    tableHeaderCell: 'daypicker__calendar-header-cell', // calendar table header cell with weekdays
-    dayButton: 'daypicker__day', // button element for each day
+    wrapper: 'daypickr', // calendar dialog wrapper
+    header: 'daypickr__header', // calendar header with month and year navigation
+    select: 'daypickr__select', // all select elements
+    monthSelect: 'daypickr__select--month', // select for choosing calendar month
+    yearSelect: 'daypickr__select--year', // select for choosing calendar year
+    button: 'daypickr__button', // all buttons in calendar
+    paginationButton: 'daypickr__button--pagination', // next/prev pagination buttons
+    nextMonthButton: 'daypickr__button--pagination-next', // next month pagination button
+    prevMonthButton: 'daypickr__button--pagination-prev', // previous month pagination button
+    yearMonthWrapper: 'daypickr__year-month-wrapper', // wrapper for year and month selects
+    pagination: 'daypickr__pagination', // wrapper for prev/next buttons
+    table: 'daypickr__calendar', // calendar table
+    tableRow: 'daypickr__calendar-row', // calendar table row
+    tableCell: 'daypickr__calendar-cell', // calendar table cell
+    tableHeaderRow: 'daypickr__calendar-header-row', // calendar table header row with weekdays
+    tableHeaderCell: 'daypickr__calendar-header-cell', // calendar table header cell with weekdays
+    dayButton: 'daypickr__day', // button element for each day
     isToday: 'isToday', // today button element
     isSelected: 'isSelected', // selected button element
     srOnly: 'sr-only', // visually hidden screenreader text
-    closeButton: 'daypicker__button--close', // dialog close button
-    toggleButton: 'daypicker__button--toggle', // open/close toggle button
+    closeButton: 'daypickr__button--close', // dialog close button
+    toggleButton: 'daypickr__button--toggle', // open/close toggle button
   },
   selectedDay, // preselected date, also fills input value
   firstDayOfWeek = 1, // first day of week, defaults to monday

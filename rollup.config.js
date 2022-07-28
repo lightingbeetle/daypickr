@@ -8,11 +8,11 @@ import browsersync from 'rollup-plugin-browsersync';
 const production = !process.env.ROLLUP_WATCH;
 
 export default {
-  input: 'src/daypicker.js',
+  input: 'src/daypickr.js',
   output: {
-    file: 'public/daypicker.js',
+    file: 'public/daypickr.js',
     format: 'umd',
-    name: 'dayPicker',
+    name: 'dayPickr',
     sourcemap: true,
     exports: 'default',
   },
