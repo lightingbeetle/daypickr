@@ -18,6 +18,15 @@ import dayPickr from 'daypickr';
 const myDaypickr = new dayPickr(document.getElementById('#my-dayPickr'), { ...options });
 ```
 
+```html
+<script src="daypickr.min.js"></script>
+<script>
+  dayPickr.default(document.getElementById('#my-dayPickr'), {
+    ...options,
+  });
+</script>
+```
+
 The dayPickr function renders two input elements - a user editable input field and a hidden field that is populated with the selected value. The user editable input should be formatted in natural language and is not set along with the form. The hidden input is populated with YYYY-MM-DD format, which can be customized.
 
 ## Options

@@ -37,13 +37,13 @@
   <div id="daypickr" data-daypickr></div>
   </main>
   <div id="root-daypickrs"></div> 
-  <script src='daypickr.js'></script>
+  <script src='daypickr.min.js'></script>
   <script>
     window.addEventListener('DOMContentLoaded', () => {
       const daypickrs = Array.from(document.querySelectorAll('[data-daypickr]'));
 
       daypickrs.map((element) => {
-        dayPickr(element, {
+        dayPickr.default(element, {
           disabledDayFn: (date) => [6, 0].includes(date.getDay()),
         });
       });

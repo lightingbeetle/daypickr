@@ -6,4 +6,4 @@ function dayPickr(element, options) {
   render(<Daypickr {...options} />, element);
 }
 
-module.exports = dayPickr;
+export default dayPickr;
