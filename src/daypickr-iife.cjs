@@ -1,6 +1,5 @@
-import { render } from 'preact';
-
-import Daypickr from './components/Daypickr';
+const render = require('preact').render;
+const Daypickr = require('./components/Daypickr');
 
 function dayPickr(element, options) {
   render(<Daypickr {...options} />, element);

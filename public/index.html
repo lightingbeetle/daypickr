@@ -3,7 +3,7 @@
 <head lang='en'>
   <meta charset='utf-8'>
   <meta name='viewport' content='width=device-width'>
-  <title>Daypicker</title>
+  <title>Daypickr</title>
 </head>
 <body>
   <style>
@@ -33,17 +33,19 @@
     }
   </style>
   <main>
-    <h1>Daypicker</h1>
-    <div id="daypicker" data-daypicker></div>
+  <h1>Daypickr</h1>
+  <div id="daypickr" data-daypickr></div>
   </main>
-  <script src='daypicker.min.js'></script>
+  <div id="root-daypickrs"></div> 
+  <script src='daypickr.js'></script>
   <script>
     window.addEventListener('DOMContentLoaded', () => {
-      const daypickers = Array.from(document.querySelectorAll('[data-daypicker]'));
-      console.log(dayPicker);
+      const daypickrs = Array.from(document.querySelectorAll('[data-daypickr]'));
 
-      daypickers.map((element) => {
-        dayPicker(element);
+      daypickrs.map((element) => {
+        dayPickr(element, {
+          disabledDayFn: (date) => [6, 0].includes(date.getDay()),
+        });
       });
     })
   </script>

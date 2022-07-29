@@ -5,7 +5,7 @@ esbuild.build({
   bundle: true,
   target: 'es2015',
   format: 'cjs',
-  outfile: 'public/daypicker.js',
+  outfile: 'public/daypickr.js',
   sourcemap: true,
   loader: { '.js': 'jsx' },
   loader: { '.js': 'jsx' },
@@ -15,12 +15,12 @@ esbuild.build({
 });
 
 esbuild.build({
-  entryPoints: ['src/daypicker-iife.cjs'],
+  entryPoints: ['src/daypickr-iife.cjs'],
   bundle: true,
   platform: 'browser',
   format: 'iife',
-  globalName: 'dayPicker',
-  outfile: 'public/daypicker.min.js',
+  globalName: 'dayPickr',
+  outfile: 'public/daypickr.min.js',
   sourcemap: true,
   // minify: true,
   loader: { '.js': 'jsx', '.cjs': 'jsx' },

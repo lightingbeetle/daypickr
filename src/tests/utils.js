@@ -2,10 +2,10 @@ import { html } from 'htm/preact';
 import userEvent from '@testing-library/user-event/dist/index.mjs';
 import { render, screen } from '@testing-library/preact';
 
-import Daypicker from '../components/Daypicker';
+import Daypickr from '../components/Daypickr';
 
 export function renderExample(props = {}) {
-  const { container } = render(html`<${Daypicker} id="example" test-id="example" ...${props} />`);
+  const { container } = render(html`<${Daypickr} id="example" test-id="example" ...${props} />`);
 
   return {
     input: screen.getByTestId('example'),

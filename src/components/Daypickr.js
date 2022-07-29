@@ -9,7 +9,7 @@ import Calendar from './Calendar';
 import YearSelect from './YearSelect';
 import MonthSelect from './MonthSelect';
 
-const Daypicker = ({
+const Daypickr = ({
   min = '1900-01-01',
   max = '2100-12-31',
   classes = classNames,
@@ -225,12 +225,12 @@ const Daypicker = ({
         className={classes.wrapper}
         role="dialog"
         aria-modal="true"
-        aria-labelledby="daypicker-label"
+        aria-labelledby="daypickr-label"
         hidden={!isDialogOpen}
         ref={dialogRef}
       >
-        <div className="daypicker__content">
-          <h2 id="daypicker-label" className="sr-only">
+        <div className="daypickr__content">
+          <h2 id="daypickr-label" className="sr-only">
             {view.getFullYear()} {view.getMonth()}
           </h2>
           <div className={classes.header}>
@@ -271,4 +271,4 @@ const Daypicker = ({
   );
 };
 
-export default Daypicker;
+export default Daypickr;
