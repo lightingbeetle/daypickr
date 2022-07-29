@@ -19,7 +19,6 @@ export default {
   },
   node: {
     ...commonConfig,
-    entryPoints: [entry],
     platform: 'node',
     target: 'node14',
     outfile: 'public/daypickr.js',

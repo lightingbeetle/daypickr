@@ -1,5 +1,5 @@
 import esbuild from 'esbuild';
-import config from './config';
+import config from './config.js';
 
 esbuild.serve(
   {
