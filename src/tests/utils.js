@@ -1,18 +1,18 @@
-import { html } from 'htm/preact';
 import userEvent from '@testing-library/user-event/dist/index.mjs';
 import { render, screen } from '@testing-library/preact';
+import { h } from 'preact';
 
 import Daypickr from '../components/Daypickr';
 
 export function renderExample(props = {}) {
-  const { container } = render(html`<${Daypickr} id="example" test-id="example" ...${props} />`);
+  const { container } = render(<Daypickr id="example" test-id="example" {...props} />);
 
   return {
     input: screen.getByTestId('example'),
     valueInput: screen.getByTestId('example-value'),
     dialog: screen.getByRole('dialog', { hidden: true }),
     table: screen.getByRole('table', { hidden: true }),
-    toggleButton: screen.getByText('Choose date'),
+    toggleButton: screen.getByRole('button'),
     user: userEvent.setup(),
     container,
   };
