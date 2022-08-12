@@ -76,5 +76,20 @@ The dayPickr function renders two input elements - a user editable input field a
   },
   name, // name of the hidden input element
   id, // id of the user editable input field
+  calendarIcon, // object rendered into an element in the open/close button using createElement. When present, the button text is wrapped in a span with srOnly className.
+  /**
+   * calendarIcon: {
+   *   type: 'svg',
+   *   width: '10',
+   *   height: '10,
+   *   viewBox: '0 0 10 10',
+   *   children: [
+   *     type: 'rect',
+   *     width: '10',
+   *     height: '10',
+   *     fill: 'blue',
+   *   ]
+   * }
+   * /
 }
 ```
