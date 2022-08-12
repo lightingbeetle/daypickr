@@ -1,4 +1,6 @@
 import { useContext } from 'preact/hooks';
+import { h } from 'preact';
+
 import {
   getMonthView,
   splitToWeeks,

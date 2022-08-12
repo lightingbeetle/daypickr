@@ -8,6 +8,7 @@ import Context from './Context';
 import Calendar from './Calendar';
 import YearSelect from './YearSelect';
 import MonthSelect from './MonthSelect';
+import { h } from 'preact';
 
 const Daypickr = ({
   min = '1900-01-01',
@@ -28,6 +29,7 @@ const Daypickr = ({
 
     return false;
   },
+  calendarIcon,
   name,
   id,
 }) => {
@@ -184,6 +186,9 @@ const Daypickr = ({
     }
   };
 
+  const renderFromObject = ({ type, children, ...props }) =>
+    h(type, props, children && children.length && children.map((child) => renderFromObject(child)));
+
   return (
     <Context.Provider
       value={{
@@ -219,7 +224,8 @@ const Daypickr = ({
         ref={toggleButtonRef}
         className={classes.toggleButton}
       >
-        {l10n.openButton}
+        {calendarIcon && renderFromObject(calendarIcon)}
+        {calendarIcon ? <span class={classes.srOnly}>{l10n.openButton}</span> : l10n.openButton}
       </button>
       <div
         className={classes.wrapper}

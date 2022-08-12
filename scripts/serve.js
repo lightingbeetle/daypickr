@@ -1,11 +1,12 @@
-import esbuild from 'esbuild';
+import esbuildServe from 'esbuild-serve';
 import config from './config.js';
 
-esbuild.serve(
-  {
-    servedir: 'public',
-  },
+esbuildServe(
   {
     ...config.browser,
+  },
+  {
+    port: '8000',
+    root: './public',
   }
 );

@@ -1,5 +1,6 @@
 import { useContext } from 'preact/hooks';
 import { forwardRef } from 'preact/compat';
+import { h } from 'preact';
 
 import Context from './Context';
 import Select from './Select';
