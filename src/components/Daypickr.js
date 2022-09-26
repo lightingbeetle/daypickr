@@ -208,7 +208,7 @@ const Daypickr = ({
       }}
     >
       <input
-        id={id}
+        id={`${id}-input`}
         type="text"
         className={classes.input}
         value={selected && selected.toLocaleDateString(locale)}
