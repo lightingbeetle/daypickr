@@ -237,7 +237,7 @@ const Daypickr = ({
       >
         <div className="daypickr__content">
           <h2 id="daypickr-label" className="sr-only">
-            {view.getFullYear()} {view.getMonth()}
+            {view.toLocaleString(locale, { month: 'long', year: 'numeric' })}
           </h2>
           <div className={classes.header}>
             <div className={classes.yearMonthWrapper}>
