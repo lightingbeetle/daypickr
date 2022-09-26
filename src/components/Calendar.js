@@ -36,7 +36,7 @@ const Calendar = () => {
       <thead>
         <tr className={classes.tableHeaderRow}>
           {weekdays.map((day) => (
-            <th scope="col" className="{classes.tableHeaderCell}">
+            <th scope="col" className={classes.tableHeaderCell}>
               <span className={classes.srOnly}>{day.name}</span>
               <span aria-hidden="true">{day.shortname}</span>
             </th>
