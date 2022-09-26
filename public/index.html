@@ -44,6 +44,7 @@
 
       daypickrs.map((element) => {
         dayPickr.default(element, {
+          id: element.getAttribute('id'),
           disabledDayFn: (date) => [6, 0].includes(date.getDay()),
         });
       });
