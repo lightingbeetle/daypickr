@@ -37,6 +37,7 @@ const Daypickr = ({
   const [selected, setSelected] = useState(selectedDay ? new Date(selectedDay) : undefined);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  const firstUpdate = useRef(true);
   const inputRef = useRef();
   const focusedElement = useRef();
   const toggleButtonRef = useRef();
@@ -91,12 +92,16 @@ const Daypickr = ({
   }, [isDialogOpen, dialogRef.current]);
 
   useLayoutEffect(() => {
-    if (isDialogOpen) {
-      yearSelectRef.current.focus();
-    } else if (document.activeElement === inputRef.current) {
-      return;
+    if (!firstUpdate.current) {
+      if (isDialogOpen) {
+        yearSelectRef.current.focus();
+      } else if (document.activeElement === inputRef.current) {
+        return;
+      } else {
+        toggleButtonRef.current.focus();
+      }
     } else {
-      toggleButtonRef.current.focus();
+      firstUpdate.current = false;
     }
   }, [isDialogOpen, yearSelectRef.current, toggleButtonRef.current, inputRef.current]);
 
@@ -251,14 +256,14 @@ const Daypickr = ({
                 className={`${classes.button} ${classes.prevMonthButton}`}
                 onClick={prevMonth}
               >
-                {l10n.prevMonth}
+                <span>{l10n.prevMonth}</span>
               </button>
               <button
                 type="button"
                 className={`${classes.button} ${classes.nextMonthButton}`}
                 onClick={nextMonth}
               >
-                {l10n.nextMonth}
+                <span>{l10n.nextMonth}</span>
               </button>
             </div>
           </div>
