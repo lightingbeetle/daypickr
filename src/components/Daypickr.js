@@ -92,7 +92,7 @@ const Daypickr = ({
   }, [isDialogOpen, dialogRef.current]);
 
   useLayoutEffect(() => {
-    if (!isInitialRender.current) {
+    if (isInitialRender.current) {
       isInitialRender.current = false;
       return;
     } else if (isDialogOpen) {
