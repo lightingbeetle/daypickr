@@ -93,15 +93,14 @@ const Daypickr = ({
 
   useLayoutEffect(() => {
     if (!isInitialRender.current) {
-      if (isDialogOpen) {
-        yearSelectRef.current.focus();
-      } else if (document.activeElement === inputRef.current) {
-        return;
-      } else {
-        toggleButtonRef.current.focus();
-      }
-    } else {
       isInitialRender.current = false;
+      return;
+    } else if (isDialogOpen) {
+      yearSelectRef.current.focus();
+    } else if (document.activeElement === inputRef.current) {
+      return;
+    } else {
+      toggleButtonRef.current.focus();
     }
   }, [isDialogOpen, yearSelectRef.current, toggleButtonRef.current, inputRef.current]);
 
