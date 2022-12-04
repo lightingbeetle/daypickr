@@ -58,7 +58,11 @@ const Daypickr = ({
           yearSelectRef.current.focus();
         }
 
-        if (e.shiftKey && document.activeElement === yearSelectRef.current) {
+        if (
+          e.shiftKey &&
+          (document.activeElement === yearSelectRef.current ||
+            document.activeElement === dialogRef.current)
+        ) {
           e.preventDefault();
           closeButtonRef.current.focus();
         }
