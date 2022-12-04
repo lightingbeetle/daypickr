@@ -220,15 +220,15 @@ describe('keyboard navigation', () => {
       const { user, container, toggleButton } = renderExample();
       const yearSelect = container.querySelector(`.${classNames.yearSelect}`);
       const closeButton = container.querySelector(`.${classNames.closeButton}`);
+      const dialog = container.querySelector('[role="dialog"]');
 
       await user.click(toggleButton);
+      expect(document.activeElement).toEqual(dialog);
 
-      expect(document.activeElement).toEqual(yearSelect);
       await user.keyboard('{Shift>}{Tab}{/Shift}');
-
       expect(document.activeElement).toEqual(closeButton);
-      await user.keyboard('{Tab}');
 
+      await user.keyboard('{Tab}');
       expect(document.activeElement).toEqual(yearSelect);
     });
   });
