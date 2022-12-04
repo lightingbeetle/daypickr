@@ -93,7 +93,7 @@ const Daypickr = ({
 
   useLayoutEffect(() => {
     if (isDialogOpen) {
-      yearSelectRef.current.focus();
+      dialogRef.current.focus();
     } else if (document.activeElement !== inputRef.current && !isInitialRender.current) {
       toggleButtonRef.current.focus();
     } else {
@@ -235,6 +235,7 @@ const Daypickr = ({
         aria-labelledby="daypickr-label"
         hidden={!isDialogOpen}
         ref={dialogRef}
+        tabIndex="-1"
       >
         <div className="daypickr__content">
           <h2 id="daypickr-label" className="sr-only">
