@@ -37,6 +37,7 @@ const Daypickr = ({
   const [selected, setSelected] = useState(selectedDay ? new Date(selectedDay) : undefined);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  const isInitialRender = useRef(true);
   const inputRef = useRef();
   const focusedElement = useRef();
   const toggleButtonRef = useRef();
@@ -93,10 +94,10 @@ const Daypickr = ({
   useLayoutEffect(() => {
     if (isDialogOpen) {
       yearSelectRef.current.focus();
-    } else if (document.activeElement === inputRef.current) {
-      return;
-    } else {
+    } else if (document.activeElement !== inputRef.current && !isInitialRender.current) {
       toggleButtonRef.current.focus();
+    } else {
+      isInitialRender.current = false;
     }
   }, [isDialogOpen, yearSelectRef.current, toggleButtonRef.current, inputRef.current]);
 

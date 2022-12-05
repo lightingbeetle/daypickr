@@ -8,7 +8,7 @@ export function renderExample(props = {}) {
   const { container } = render(<Daypickr id="example" test-id="example" {...props} />);
 
   return {
-    input: screen.getByTestId('example'),
+    input: screen.getByTestId('example-input'),
     valueInput: screen.getByTestId('example-value'),
     dialog: screen.getByRole('dialog', { hidden: true }),
     table: screen.getByRole('table', { hidden: true }),
