@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect, useLayoutEffect, useCallback } from 'preact/hooks';
+import { useState, useRef, useEffect, useLayoutEffect } from 'preact/hooks';
 
 import classNames from '../utils/classNames';
-import l10n from '../utils/l10n';
+import { l10n as l10nEN } from '../utils/l10n';
 import { getMonth, dateToYYYYMMDD, getLastDayOfWeek, getFirstDayOfWeek } from '../utils/date';
 import Context from './Context';
 
@@ -14,6 +14,7 @@ const Daypickr = ({
   min = '1900-01-01',
   max = '2100-12-31',
   classes = classNames,
+  l10n = l10nEN,
   selectedDay,
   firstDayOfWeek = 1,
   locale = {},
