@@ -1,6 +1,6 @@
 {
   "name": "daypickr",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "An accessible, interactive widget for selecting a day which populates an input field with a date.",
   "main": "public/daypickr.js",
   "files": [
