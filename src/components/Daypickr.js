@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useLayoutEffect } from 'preact/hooks';
 
 import classNames from '../utils/classNames';
-import { l10n as l10nEN } from '../utils/l10n';
+import { default as l10nEN } from '../utils/l10n';
 import { getMonth, dateToYYYYMMDD, getLastDayOfWeek, getFirstDayOfWeek } from '../utils/date';
 import Context from './Context';
 
