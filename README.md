@@ -62,9 +62,10 @@ The dayPickr function renders two input elements - a user editable input field a
   l10n = {
     prevMonth: 'previous month', // text in first pagination button
     nextMonth: 'next month',  // text in second pagination button
-    month: 'Month', // hidden description of month select
-    year: 'Year', // hidden description of year select
-    // weekdays where name have class from classes.srOnly for screenareaders and shorstname is visible
+    month: 'Month', // hidden description of month select element
+    year: 'Year', // hidden description of year select element
+    // weekdays where shorstnames are visible are names are rendered in element with
+    // class from classes.srOnly for screenareaders
     weekdays: [
       { name: 'Sunday', shortname: 'Su' },
       { name: 'Monday', shortname: 'Mo' },
@@ -74,7 +75,7 @@ The dayPickr function renders two input elements - a user editable input field a
       { name: 'Friday', shortname: 'Fr' },
       { name: 'Saturday', shortname: 'Sa' },
     ],
-    // months in month Select element
+    // months in month select element
     months: [
       'January',
       'February',
