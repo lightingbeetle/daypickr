@@ -18,7 +18,7 @@ const Select = forwardRef(
           ref={ref}
           {...other}
         >
-          {options.map((opt) => (
+          {options?.map((opt) => (
             <option
               value={opt?.value || opt}
               selected={value === opt?.value || value === opt ? 'selected' : undefined}

@@ -58,7 +58,7 @@ export function splitToWeeks(days) {
 
 /** reorder week days to match firstDayOfWeek settings */
 export function arrangeWeekdays(weekdays, firstDayOfWeek) {
-  const days = [...weekdays];
+  const days = weekdays?.length ? [...weekdays] : [];
   const moveToEnd = days.splice(0, firstDayOfWeek);
   return [...days, ...moveToEnd];
 }

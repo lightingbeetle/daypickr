@@ -50,4 +50,13 @@ describe('render', () => {
 
     expect(toggleButton.querySelector('svg')).toBeInTheDocument();
   });
+  test('renders elements with translated aria labels', () => {
+    const { toggleButton } = renderExample({
+      l10n: {
+        openButton: 'Vyberte dátum',
+      },
+    });
+
+    expect(toggleButton.textContent).toBe('Vyberte dátum');
+  });
 });
