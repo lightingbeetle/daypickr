@@ -59,6 +59,40 @@ The dayPickr function renders two input elements - a user editable input field a
     closeButton: 'daypickr__button--close', // dialog close button
     toggleButton: 'daypickr__button--toggle', // open/close toggle button
   },
+  l10n = {
+    prevMonth: 'previous month', // text in first pagination button
+    nextMonth: 'next month',  // text in second pagination button
+    month: 'Month', // hidden description of month select element
+    year: 'Year', // hidden description of year select element
+    // weekdays where shorstnames are visible are names are rendered in element with
+    // class from classes.srOnly for screenareaders
+    weekdays: [
+      { name: 'Sunday', shortname: 'Su' },
+      { name: 'Monday', shortname: 'Mo' },
+      { name: 'Tuesday', shortname: 'Tu' },
+      { name: 'Wednesday', shortname: 'We' },
+      { name: 'Thursday', shortname: 'Th' },
+      { name: 'Friday', shortname: 'Fr' },
+      { name: 'Saturday', shortname: 'Sa' },
+    ],
+    // months in month select element
+    months: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ],
+    openButton: 'Choose date', // text in toggle button
+    closeButton: 'Close', // text in close button
+  },
   selectedDay, // preselected date, also fills input value
   firstDayOfWeek = 1, // first day of week, defaults to monday
   locale = {}, // locale of the displayed date.
