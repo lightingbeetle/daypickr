@@ -1,4 +1,4 @@
-import { waitFor } from '@testing-library/preact';
+import { waitFor, fireEvent } from '@testing-library/preact';
 
 import { renderExample, finishInteractions } from './utils';
 import { dateToYYYYMMDD, getFirstDayOfWeek, getLastDayOfWeek, getMonth } from '../utils/date';
@@ -130,6 +130,28 @@ describe('keyboard navigation', () => {
 
     await waitFor(() => {
       expect(valueInput).toHaveValue(dateToYYYYMMDD(newDate));
+    });
+  });
+  describe('Select element', () => {
+    test(`'Month of January is selected after selecting it`, async () => {
+      const { container, toggleButton, user } = renderExample();
+      await user.click(toggleButton);
+      const monthSelect = container.querySelector(
+        'select.daypickr__select.daypickr__select--month'
+      );
+      const yearSelect = container.querySelector('select.daypickr__select.daypickr__select--year');
+      yearSelect.focus();
+      await user.keyboard('{Enter}');
+      fireEvent.change(yearSelect, { target: { value: 2000 } });
+      await finishInteractions();
+
+      monthSelect.focus();
+      await user.keyboard('{Enter}');
+      fireEvent.change(monthSelect, { target: { value: 0 } });
+      await finishInteractions();
+      await waitFor(() => {
+        expect(container.querySelector('h2#daypickr-label').textContent).toBe('január 2000');
+      });
     });
   });
 

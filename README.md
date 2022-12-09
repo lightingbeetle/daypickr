@@ -64,7 +64,7 @@ The dayPickr function renders two input elements - a user editable input field a
     nextMonth: 'next month',  // text in second pagination button
     month: 'Month', // hidden description of month select element
     year: 'Year', // hidden description of year select element
-    // weekdays where shorstnames are visible are names are rendered in element with
+    // weekdays where shortnames are visible and names are rendered in element with
     // class from classes.srOnly for screenareaders
     weekdays: [
       { name: 'Sunday', shortname: 'Su' },
