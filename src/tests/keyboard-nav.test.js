@@ -150,7 +150,7 @@ describe('keyboard navigation', () => {
       fireEvent.change(monthSelect, { target: { value: 0 } });
       await finishInteractions();
       await waitFor(() => {
-        expect(container.querySelector('h2#daypickr-label').textContent).toBe('január 2000');
+        expect(container.querySelector('h2#daypickr-label').textContent).toBe('January 2000');
       });
     });
   });

@@ -6,7 +6,7 @@ function getRange(startDate, endDate) {
   const days = [];
   let currentDay = startDate;
 
-  while (currentDay.getTime() !== endDate.getTime()) {
+  while (currentDay.getTime() < endDate.getTime()) {
     days.push(new Date(currentDay));
     currentDay = new Date(currentDay.setDate(currentDay.getDate() + 1));
   }
