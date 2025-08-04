@@ -8,3 +8,7 @@ esbuild.build({
 esbuild.build({
   ...config.browser,
 });
+
+esbuild.build({
+  ...config.esm,
+});

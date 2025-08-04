@@ -53,5 +53,9 @@
         }
       ]
     ]
+  },
+  "exports": {
+    ".": "./public/daypickr.js",
+    "./esm": "./public/esm/index.js"
   }
 }

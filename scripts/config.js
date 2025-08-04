@@ -23,4 +23,11 @@ export default {
     target: 'node14',
     outfile: 'public/daypickr.js',
   },
+  esm: {
+    ...commonConfig,
+    format: 'esm',
+    platform: 'browser',
+    outfile: 'public/esm/index.js',
+    minify: false,
+  },
 };
