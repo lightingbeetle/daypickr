@@ -4,7 +4,8 @@
   "description": "An accessible, interactive widget for selecting a day which populates an input field with a date.",
   "main": "public/daypickr.js",
   "files": [
-    "public/*"
+    "public/*",
+    "public/esm"
   ],
   "type": "module",
   "scripts": {
