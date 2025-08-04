@@ -58,10 +58,7 @@
   },
   "exports": {
     ".": "./public/daypickr.js",
-    "./esm": {
-      "import": "./public/esm/index.js",
-      "require": "./public/esm/index.js"
-    },
+    "./esm": "./public/esm/index.js",
     "./esm/index.js": "./public/esm/index.js",
     "./esm/*": "./public/esm/*"
   }
