@@ -1,6 +1,6 @@
 {
   "name": "daypickr",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "An accessible, interactive widget for selecting a day which populates an input field with a date.",
   "main": "public/daypickr.js",
   "files": [
@@ -62,6 +62,7 @@
       "import": "./public/esm/index.js",
       "require": "./public/esm/index.js"
     },
+    "./esm/index.js": "./public/esm/index.js",
     "./esm/*": "./public/esm/*"
   }
 }
