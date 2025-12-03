@@ -4,7 +4,7 @@ An accessible, interactive widget for selecting a day which populates an input f
 
 ## Demo
 
-[https://daypickr.vercel.app/](https://daypickr.vercel.app/)
+[https://daypickr.lb.sk/](https://daypickr.lb.sk/)
 
 ## Use
 
